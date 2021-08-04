@@ -7,6 +7,13 @@
     <string name="registrate">Regístrate</string>
     <string name="errorpass">Contraseña incorrecta</string>
     <string name="digits6">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="digits8">El usuario debe tener al menos 8 caracteres</string>
     <string name="email_invalido">El correo ingresado no es válido</string>
-    <string name="errorlogin">El correo ingresado es incorrecto</string>
+    <string name="errorlogin">El correo ingresado no existe</string>
+    <string name="crear_usuario">Crear usuario</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="repeat_password">Repetir la contraseña</string>
+    <string name="no_coincidencia">Las contraseñas no coinciden</string>
+    <string name="errorregister">Verifique todos los campos</string>
+    <string name="mostrar">Mostrar contraseña</string>
 </resources>

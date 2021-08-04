@@ -1,7 +1,10 @@
 package com.example.myfinances.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -15,7 +18,6 @@ import com.example.myfinances.utils.passValidator
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
-    private var condicion = booleanArrayOf(false, false)
     private var banEmail = false
     private var banPass = false
     private var usuarios: MutableList<Users> = mutableListOf()
@@ -39,17 +41,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        /*Verifica cada momento como cambia lo que hay en la barra de contraseña
-        * para verificar si es valida o no*/
-        loginBinding.textPassword.doAfterTextChanged {
-            if (!passValidator(loginBinding.textPassword.text.toString())) {
-                loginBinding.password.error = getString(R.string.digits6)
-                condicion[1] = false
+        loginBinding.mostrar.setOnClickListener {
+            if (!loginBinding.mostrar.isChecked) {
+                loginBinding.textPassword.transformationMethod =
+                    PasswordTransformationMethod.getInstance()
             } else {
-                loginBinding.password.error = null
-                condicion[1] = true
+                loginBinding.textPassword.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
             }
-            loginBinding.send.isEnabled = condicion.all { it }
         }
 
         /*Verifica cada momneto como cambia lo que hay en la barra de correo
@@ -57,12 +56,19 @@ class LoginActivity : AppCompatActivity() {
         loginBinding.textEmail.doAfterTextChanged {
             if (!emailValidator(loginBinding.textEmail.text.toString())) {
                 loginBinding.email.error = getString(R.string.email_invalido)
-                condicion[0] = false
             } else {
                 loginBinding.email.error = null
-                condicion[0] = true
             }
-            loginBinding.send.isEnabled = condicion.all { it }
+        }
+
+        /*Verifica cada momento como cambia lo que hay en la barra de contraseña
+        * para verificar si es valida o no*/
+        loginBinding.textPassword.doAfterTextChanged {
+            if (!passValidator(loginBinding.textPassword.text.toString())) {
+                loginBinding.password.error = getString(R.string.digits6)
+            } else {
+                loginBinding.password.error = null
+            }
         }
 
         /*Funcion que se ejecuta cuando damos en el boton de inicio de sesion*/
@@ -94,5 +100,28 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.errorlogin), Toast.LENGTH_LONG).show()
             }
         }
+
+        loginBinding.register.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivityForResult(intent, 1)
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            val user: Users = data!!.getSerializableExtra("user") as Users
+            loginBinding.textEmail.setText(EMPTY)
+            loginBinding.textPassword.setText(EMPTY)
+            usuarios.add(user)
+            //guardarusuario(user.nickname.toString(), user.email.toString(), user.password.toString())
+        }
+    }
+
+    /*
+    private fun guardarusuario(name: String?, email: String?, password: String?) {
+        val usuario = User(id = Types.NULL, nombre = name, email = email, password = password)
+        val userdao: UserDAO = MyFinancesApp.database.userDao()
+        userdao.insertUser(usuario)
+    }*/
 }
