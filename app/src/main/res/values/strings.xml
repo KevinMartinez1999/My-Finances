@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">My Finances</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="registrate">Regístrate</string>
+    <string name="errorpass">Contraseña incorrecta</string>
+    <string name="digits6">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="email_invalido">El correo ingresado no es válido</string>
+    <string name="errorlogin">El correo ingresado es incorrecto</string>
 </resources>
