@@ -1,9 +1,10 @@
-package com.example.myfinances
+package com.example.myfinances.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myfinances.R
 import java.util.*
 import kotlin.concurrent.timerTask
 
