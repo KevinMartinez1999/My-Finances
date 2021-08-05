@@ -22,4 +22,10 @@
     <string name="estadisticas">Estadisticas</string>
     <string name="bienes">Bienes</string>
     <string name="ajustes">Ajustes</string>
+    <string name="diario">Diario</string>
+    <string name="semanal">Semanal</string>
+    <string name="mensual">Mensual</string>
+    <string name="ingresos">ingresos</string>
+    <string name="gastos">Gastos</string>
+    <string name="darkTheme">Modo oscuro</string>
 </resources>
