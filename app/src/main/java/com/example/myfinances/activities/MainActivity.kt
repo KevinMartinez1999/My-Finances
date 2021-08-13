@@ -5,21 +5,17 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.myfinances.R
-import com.example.myfinances.Users
 import com.example.myfinances.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainBinding: ActivityMainBinding
-    private var usuarios: MutableList<Users> = mutableListOf()
-    private lateinit var user: Users
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +37,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val data = intent.extras
-        this.title = data?.getString("nick")
-        user = Users(data?.getString("nick"), data?.getString("email"), data?.getString("pass"))
-        usuarios.add(user)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -57,9 +48,6 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.logout_menu -> {
                 val intent = Intent(this, LoginActivity::class.java)
-                val bundle = Bundle()
-                bundle.putSerializable("user", user)
-                intent.putExtras((bundle))
                 startActivity(intent)
                 finish()
             }

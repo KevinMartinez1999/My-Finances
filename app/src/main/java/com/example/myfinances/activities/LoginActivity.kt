@@ -6,30 +6,27 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import com.example.myfinances.MyFinancesApp
 import com.example.myfinances.R
-import com.example.myfinances.Users
+import com.example.myfinances.data.dao.UserDAO
+import com.example.myfinances.data.entities.User
 import com.example.myfinances.databinding.ActivityLoginBinding
 import com.example.myfinances.utils.EMPTY
 import com.example.myfinances.utils.emailValidator
 import com.example.myfinances.utils.passValidator
+import java.sql.Types
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
-    private var banEmail = false
-    private var banPass = false
-    private var usuarios: MutableList<Users> = mutableListOf()
-    private lateinit var nick: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(loginBinding.root)
-
-        // Modo test: Usar para evitar registro ya que no se cuenta con base de datos aun
-        usuarios.add(Users("kdmz1999", "kevinmartinez9907@gmail.com", "123456"))
 
         /*Cuando le damos click a la barra de texto de la contraseña
         * luego de que tenia el aviso de error, este se va a quitar para permitir
@@ -73,55 +70,52 @@ class LoginActivity : AppCompatActivity() {
 
         /*Funcion que se ejecuta cuando damos en el boton de inicio de sesion*/
         loginBinding.send.setOnClickListener {
-            for (u in usuarios) {
-                if (loginBinding.textEmail.text.toString() == u.email) {
-                    banEmail = true
-                    if (loginBinding.textPassword.text.toString() == u.password) {
-                        banPass = true
-                        nick = u.nickname.toString()
-                    }
-                }
-            }
-
-            if (banEmail) {
-                if (banPass) {
-                    banEmail = false
-                    banPass = false
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("email", loginBinding.textEmail.text.toString())
-                    intent.putExtra("pass", loginBinding.textPassword.text.toString())
-                    intent.putExtra("nick", nick)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    loginBinding.password.error = getString(R.string.errorpass)
-                }
+            val email = loginBinding.textEmail.text.toString()
+            val flag = buscarusuario(email)
+            if (flag) {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, getString(R.string.errorlogin), Toast.LENGTH_LONG).show()
             }
         }
 
+        val getData =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    val name: String = data!!.getStringExtra("name") as String
+                    val email: String = data.getStringExtra("email") as String
+                    val pass: String = data.getStringExtra("password") as String
+                    loginBinding.textEmail.setText(EMPTY)
+                    loginBinding.textPassword.setText(EMPTY)
+                    crearusuario(name, email, pass)
+                }
+            }
+
         loginBinding.register.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivityForResult(intent, 1)
+            getData.launch(intent)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            val user: Users = data!!.getSerializableExtra("user") as Users
-            loginBinding.textEmail.setText(EMPTY)
-            loginBinding.textPassword.setText(EMPTY)
-            usuarios.add(user)
-            //guardarusuario(user.nickname.toString(), user.email.toString(), user.password.toString())
+    private fun buscarusuario(email: String): Boolean {
+        val userDao: UserDAO = MyFinancesApp.database.userDao()
+        val user = userDao.searchUser(email)
+        if (user != null) {
+            with(loginBinding) {
+                if (user.email == textEmail.text.toString() && user.password == textPassword.text.toString()) {
+                    return true
+                }
+            }
         }
+        return false
     }
 
-    /*
-    private fun guardarusuario(name: String?, email: String?, password: String?) {
-        val usuario = User(id = Types.NULL, nombre = name, email = email, password = password)
-        val userdao: UserDAO = MyFinancesApp.database.userDao()
-        userdao.insertUser(usuario)
-    }*/
+    private fun crearusuario(name: String?, email: String?, pass: String?) {
+        val user = User(id = Types.NULL, nombre = name, email = email, password = pass)
+        val userDao: UserDAO = MyFinancesApp.database.userDao()
+        userDao.insertUser(user)
+    }
 }

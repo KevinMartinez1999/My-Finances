@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.example.myfinances.R
-import com.example.myfinances.Users
 import com.example.myfinances.databinding.ActivityRegisterBinding
 import com.example.myfinances.utils.emailValidator
 import com.example.myfinances.utils.nameValidator
@@ -37,10 +36,9 @@ class RegisterActivity : AppCompatActivity() {
                 if (password == registerBinding.textRepeatPassword.text.toString()) {
                     registerBinding.repeatPassword.error = null
                     val intent = Intent()
-                    val bundle = Bundle()
-                    val user = Users(name, email, password)
-                    bundle.putSerializable("user", user)
-                    intent.putExtras(bundle)
+                    intent.putExtra("name", name)
+                    intent.putExtra("email", email)
+                    intent.putExtra("password", password)
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
