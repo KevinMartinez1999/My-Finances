@@ -73,39 +73,43 @@ class LoginActivity : AppCompatActivity() {
                 auth = Firebase.auth
                 val email = textEmail.text.toString()
                 val password = textPassword.text.toString()
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("login", "signInWithEmail:success")
+                                    //val user = auth.currentUser
 
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("login", "signInWithEmail:success")
-                            //val user = auth.currentUser
-
-                            val intent = Intent(baseContext, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            when (task.exception?.localizedMessage) {
-                                "The email address is badly formatted." -> {
-                                    Toast.makeText(
-                                        baseContext, "El correo no esta escrito correctamente",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                "There is no user record corresponding to this identifier. The user may have been deleted." -> {
-                                    Toast.makeText(
-                                        baseContext, "El usuario no existe. Por favor regístrate",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                "The password is invalid or the user does not have a password." -> {
-                                    Toast.makeText(
-                                        baseContext, "Contraseña incorrecta. Intente de nuevo",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    val intent = Intent(baseContext, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    when (task.exception?.localizedMessage) {
+                                        "The email address is badly formatted." -> {
+                                            Toast.makeText(
+                                                baseContext,
+                                                "El correo no esta escrito correctamente",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        "There is no user record corresponding to this identifier. The user may have been deleted." -> {
+                                            Toast.makeText(
+                                                baseContext,
+                                                "El usuario no existe. Por favor regístrate",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        "The password is invalid or the user does not have a password." -> {
+                                            Toast.makeText(
+                                                baseContext,
+                                                "Contraseña incorrecta. Intente de nuevo",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
                                 }
                             }
-                        }
                     }
             }
         }
