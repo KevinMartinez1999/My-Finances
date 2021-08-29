@@ -9,14 +9,11 @@
     <string name="digits6">La contraseña debe tener al menos 6 caracteres</string>
     <string name="digits8">El usuario debe tener al menos 8 caracteres</string>
     <string name="email_invalido">El correo ingresado no es válido</string>
-    <string name="errorlogin">El correo ingresado no existe</string>
     <string name="crear_usuario">Crear usuario</string>
     <string name="username">Nombre de usuario</string>
     <string name="repeat_password">Repetir la contraseña</string>
     <string name="no_coincidencia">Las contraseñas no coinciden</string>
-    <string name="errorregister">Verifique todos los campos</string>
     <string name="mostrar">Mostrar contraseña</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logout">Cerrar sesión</string>
     <string name="registro">Registro</string>
     <string name="estadisticas">Estadisticas</string>
@@ -28,4 +25,9 @@
     <string name="ingresos">ingresos</string>
     <string name="gastos">Gastos</string>
     <string name="darkTheme">Modo oscuro</string>
+    <string name="campos_vacios">Verifique que todos los campos estén diligeciados</string>
+    <string name="email_incorrecto">El correo no está escrito correctamente</string>
+    <string name="pass_invalida">La contraseña debe contener 6 caracteres mínimo</string>
+    <string name="usuario_no_existe">El usuario no existe. Por favor regístrate</string>
+    <string name="pass_incorrecta">Contraseña incorrecta. Intente de nuevo</string>
 </resources>

@@ -8,14 +8,20 @@ import androidx.fragment.app.Fragment
 import com.example.myfinances.databinding.FragmentIngresosBinding
 
 class IngresosFragment : Fragment() {
-    private lateinit var ingresosBinding: FragmentIngresosBinding
+    private var _binding: FragmentIngresosBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        ingresosBinding = FragmentIngresosBinding.inflate(inflater, container, false)
-        return ingresosBinding.root
+        _binding = FragmentIngresosBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

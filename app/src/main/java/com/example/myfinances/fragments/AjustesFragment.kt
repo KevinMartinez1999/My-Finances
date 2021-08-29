@@ -1,33 +1,27 @@
 package com.example.myfinances.fragments
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.myfinances.databinding.FragmentAjustesBinding
 
 class AjustesFragment : Fragment() {
-    private lateinit var ajustesBinding: FragmentAjustesBinding
+    private var _binding: FragmentAjustesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        ajustesBinding = FragmentAjustesBinding.inflate(inflater, container, false)
+        _binding = FragmentAjustesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        /*
-        ajustesBinding.darkTheme.setOnClickListener {
-            if (ajustesBinding.darkTheme.isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }*/
-
-        return ajustesBinding.root
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
