@@ -5,7 +5,7 @@
         android:id="@+id/navigation_registro"
         android:enabled="true"
         android:icon="@drawable/ic_registro"
-        android:title="@string/registro"/>
+        android:title="@string/transferencias"/>
     <item
         android:id="@+id/navigation_estadisticas"
         android:enabled="true"

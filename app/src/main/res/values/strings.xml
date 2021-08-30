@@ -15,8 +15,8 @@
     <string name="no_coincidencia">Las contraseñas no coinciden</string>
     <string name="mostrar">Mostrar contraseña</string>
     <string name="logout">Cerrar sesión</string>
-    <string name="registro">Registro</string>
-    <string name="estadisticas">Estadisticas</string>
+    <string name="transferencias">Trans.</string>
+    <string name="estadisticas">Estad.</string>
     <string name="bienes">Bienes</string>
     <string name="ajustes">Ajustes</string>
     <string name="diario">Diario</string>
