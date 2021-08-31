@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout"
     android:layout_width="match_parent"
@@ -16,7 +17,21 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="530dp"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_action_button"
+        style="	Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/md_blue_800"
+        android:contentDescription="@string/app_name"
+        android:tint="#FFFFFF"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="RtlHardcoded" />
 
 </LinearLayout>
