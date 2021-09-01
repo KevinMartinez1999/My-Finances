@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager.widget.ViewPager
 import com.example.myfinances.R
 import com.example.myfinances.databinding.FragmentRegistroBinding
@@ -34,7 +35,7 @@ class RegistroFragment : Fragment() {
 
         binding.floatingActionButton.setOnClickListener {
             val newFragment = DialogRegistroFragment()
-            activity?.let { it1 -> newFragment.show(it1.supportFragmentManager, "dialog") }
+            //activity?.let { it1 -> newFragment.show(it1.supportFragmentManager, "dialog") }
         }
 
     }

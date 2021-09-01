@@ -40,6 +40,8 @@ class DialogRegistroFragment : DialogFragment() {
             binding.inputdate.setText(fecha)
         }
 
+        hacervisibleingreso()
+
         with(binding){
             inputdate.setOnClickListener {
                 DatePickerDialog(requireContext(),
@@ -51,11 +53,11 @@ class DialogRegistroFragment : DialogFragment() {
             }
 
             buttongasto.setOnClickListener {
-                hacervisiblegasto(View.VISIBLE)
+                hacervisiblegasto()
 
             }
             buttoningreso.setOnClickListener {
-                hacervisibleingreso(View.VISIBLE)
+                hacervisibleingreso()
             }
 
 
@@ -66,36 +68,27 @@ class DialogRegistroFragment : DialogFragment() {
         return binding.root
         }
 
-    private fun hacervisibleingreso(vista: Int) {
+    private fun hacervisibleingreso() {
         with(binding) {
-            inputdate.visibility = vista
             categoryaccount.text = getString(R.string.account2)
-            categoryaccount.visibility = vista
             categorytext.text = getString(R.string.category2)
-            categorytext.visibility = vista
             categoryspiner.visibility = View.INVISIBLE
-            accountsspinner.visibility = vista
-            accountspinner.visibility = vista
-            valuetext.visibility = vista
-            inputvalue.visibility = vista
-            registerbutton.visibility = vista
+            accountsspinner.visibility = View.VISIBLE
+            buttoningreso.isEnabled= false
+            buttongasto.isEnabled= true
 
         }
     }
 
-    private fun hacervisiblegasto(vista: Int) {
+    private fun hacervisiblegasto() {
         with(binding) {
-            inputdate.visibility = vista
             categoryaccount.text = getString(R.string.account)
-            categoryaccount.visibility = vista
             categorytext.text = getString(R.string.category)
-            categorytext.visibility = vista
-            categoryspiner.visibility = vista
             accountsspinner.visibility = View.INVISIBLE
-            accountspinner.visibility = vista
-            valuetext.visibility = vista
-            inputvalue.visibility = vista
-            registerbutton.visibility = vista
+            categoryspiner.visibility = View.VISIBLE
+            buttoningreso.isEnabled= true
+            buttongasto.isEnabled= false
+
         }
     }
 
