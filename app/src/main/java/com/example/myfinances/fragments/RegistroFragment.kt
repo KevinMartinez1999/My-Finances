@@ -12,6 +12,7 @@ import com.example.myfinances.databinding.FragmentRegistroBinding
 import com.example.myfinances.fragments.sub_fragments.DialogRegistroFragment
 import com.example.myfinances.ui.SectionsRegistroPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.ktx.Firebase
 
 class RegistroFragment : Fragment() {
     private var _binding: FragmentRegistroBinding? = null
@@ -35,7 +36,7 @@ class RegistroFragment : Fragment() {
 
         binding.floatingActionButton.setOnClickListener {
             val newFragment = DialogRegistroFragment()
-            //activity?.let { it1 -> newFragment.show(it1.supportFragmentManager, "dialog") }
+            activity?.let { it1 -> newFragment.show(it1.supportFragmentManager, "dialog") }
         }
 
     }

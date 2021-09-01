@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import com.example.myfinances.R
+import com.example.myfinances.data.server.RegistroIngreso
 import com.example.myfinances.databinding.FragmentDialogRegistroBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,13 +57,25 @@ class DialogRegistroFragment : DialogFragment() {
             }
 
             buttongasto.setOnClickListener {
-                hacervisiblegasto(View.VISIBLE)
+                hacervisiblegasto()
 
             }
             buttoningreso.setOnClickListener {
                 hacervisibleingreso()
             }
 
+            registerbutton.setOnClickListener {
+                val db = Firebase.firestore
+                val document = db.collection("registroingreso").document()
+                val id = document.id
+
+                val fecha = inputdate.text.toString()
+                val cuenta = accountsspinner.selectedItem.toString()
+                val monto = inputvalue.text.toString().toLong()
+
+                val newregistro = RegistroIngreso(id=id, date=fecha, account= cuenta, amount=monto)
+                db.collection("registroingreso").document(id).set(newregistro)
+            }
 
         }
 
