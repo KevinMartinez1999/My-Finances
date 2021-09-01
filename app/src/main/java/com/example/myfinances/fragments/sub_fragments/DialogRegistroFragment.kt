@@ -16,21 +16,24 @@ import java.util.*
 class DialogRegistroFragment : DialogFragment() {
 
 
-    private var _binding: FragmentDialogRegistroBinding?= null
+    private var _binding: FragmentDialogRegistroBinding? = null
     private val binding get() = _binding!!
     private var cal = Calendar.getInstance()
-    private var fecha:String = ""
+    private var fecha: String = ""
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View {
-            // Inflate the layout to use as dialog or embedded fragment
-            //return inflater.inflate(R.layout.fragment_registro_ingreso, container, false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout to use as dialog or embedded fragment
+        //return inflater.inflate(R.layout.fragment_registro_ingreso, container, false)
         _binding = FragmentDialogRegistroBinding.inflate(inflater, container, false)
 
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        binding.categoryspiner.visibility = View.VISIBLE
+        binding.buttoningreso.isEnabled = false
+
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -40,20 +43,19 @@ class DialogRegistroFragment : DialogFragment() {
             binding.inputdate.setText(fecha)
         }
 
-        hacervisibleingreso()
-
-        with(binding){
+        with(binding) {
             inputdate.setOnClickListener {
-                DatePickerDialog(requireContext(),
-            dateSetListener,
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
+                DatePickerDialog(
+                    requireContext(),
+                    dateSetListener,
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
                 ).show()
             }
 
             buttongasto.setOnClickListener {
-                hacervisiblegasto()
+                hacervisiblegasto(View.VISIBLE)
 
             }
             buttoningreso.setOnClickListener {
@@ -66,29 +68,23 @@ class DialogRegistroFragment : DialogFragment() {
 
 
         return binding.root
-        }
+    }
 
     private fun hacervisibleingreso() {
         with(binding) {
-            categoryaccount.text = getString(R.string.account2)
-            categorytext.text = getString(R.string.category2)
-            categoryspiner.visibility = View.INVISIBLE
-            accountsspinner.visibility = View.VISIBLE
-            buttoningreso.isEnabled= false
-            buttongasto.isEnabled= true
-
+            categoryspiner.visibility = View.VISIBLE
+            accountsspinner.visibility = View.GONE
+            buttoningreso.isEnabled = false
+            buttongasto.isEnabled = true
         }
     }
 
     private fun hacervisiblegasto() {
         with(binding) {
-            categoryaccount.text = getString(R.string.account)
-            categorytext.text = getString(R.string.category)
-            accountsspinner.visibility = View.INVISIBLE
-            categoryspiner.visibility = View.VISIBLE
-            buttoningreso.isEnabled= true
-            buttongasto.isEnabled= false
-
+            categoryspiner.visibility = View.GONE
+            accountsspinner.visibility = View.VISIBLE
+            buttoningreso.isEnabled = true
+            buttongasto.isEnabled = false
         }
     }
 
@@ -99,4 +95,8 @@ class DialogRegistroFragment : DialogFragment() {
         return dialog
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
