@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:orientation="vertical"
+    android:padding="16dp"
     android:visibility="visible"
     tools:context=".fragments.sub_fragments.DialogRegistroFragment">
 
@@ -12,54 +13,54 @@
         android:id="@+id/titledialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/registertype"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/buttoningreso"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="52dp"
-        android:text="@string/ingresos"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/buttongasto"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titledialog" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/buttongasto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="48dp"
-        android:text="@string/gastos"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titledialog" />
+        <Button
+            android:id="@+id/buttoningreso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ingresos"
+            app:cornerRadius="32dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/buttongasto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gastos"
+            app:cornerRadius="32dp" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/inputdate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
         android:ems="10"
         android:focusable="true"
         android:focusableInTouchMode="false"
+        android:gravity="center"
         android:hint="@string/date"
         android:importantForAutofill="no"
         android:inputType="date"
         android:minHeight="48dp"
-        android:textSize="18sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttoningreso"
-        tools:ignore="TextContrastCheck" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/categoryaccount"
@@ -67,20 +68,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/account"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputdate" />
+        android:textSize="20sp" />
 
     <Spinner
-        android:id="@+id/accountspinner"
+        android:id="@+id/metodoPagoSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/accountlist"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryaccount" />
+        android:minHeight="48dp" />
 
     <TextView
         android:id="@+id/categorytext"
@@ -88,10 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/category"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountspinner" />
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/categoryspiner"
@@ -99,45 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/categorylist"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorytext" />
-
-    <TextView
-        android:id="@+id/valuetext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/value"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoryspiner" />
-
-    <EditText
-        android:id="@+id/inputvalue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/digitvalue"
-        android:inputType="number"
-        android:visibility="gone"
-        app:layout_constraintStart_toEndOf="@+id/valuetext"
-        app:layout_constraintTop_toBottomOf="@+id/categoryspiner" />
-
-    <Button
-        android:id="@+id/registerbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/registerdialog"
-        android:visibility="gone"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputvalue" />
+        android:minHeight="48dp"
+        android:visibility="gone" />
 
     <Spinner
         android:id="@+id/accountsspinner"
@@ -145,8 +101,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:entries="@array/ingresoslist"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorytext" />
+        android:minHeight="48dp"
+        android:visibility="gone" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/valuetext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/value"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/inputvalue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/digitvalue"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/registerbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="@string/registerdialog"
+        app:cornerRadius="32dp" />
+
+</LinearLayout>
