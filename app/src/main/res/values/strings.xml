@@ -30,4 +30,31 @@
     <string name="pass_invalida">La contraseña debe contener 6 caracteres mínimo</string>
     <string name="usuario_no_existe">El usuario no existe. Por favor regístrate</string>
     <string name="pass_incorrecta">Contraseña incorrecta. Intente de nuevo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="registertype">Tipo de Registro</string>
+    <string name="date">Fecha de Registro</string>
+    <string name="category">Categoria</string>
+    <string name="category2">Descripción</string>
+    <string name="account">Metodo de pago</string>
+    <string name="account2">Tipo de Cuenta</string>
+    <string name="registerdialog">Registrar</string>
+    <string name="value">Valor</string>
+    <string name="digitvalue">Digite el Monto</string>
+    <string-array name="categorylist">
+        <item>Abarrotes</item>
+        <item>Arrendamiento</item>
+        <item>Entretenimiento</item>
+        <item>Vestimenta</item>
+        <item>Putas</item>
+    </string-array>
+    <string-array name="accountlist">
+        <item>Efectivo</item>
+        <item>Cuenta Bancaria</item>
+        <item>Tarjeta de Crédito</item>
+    </string-array>
+    <string-array name="ingresoslist">
+        <item>Sueldo</item>
+        <item>Ingresos Ocasionales</item>
+        <item>Otros</item>
+    </string-array>
 </resources>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.myfinances.R
 import com.example.myfinances.databinding.FragmentRegistroBinding
+import com.example.myfinances.fragments.sub_fragments.DialogRegistroFragment
 import com.example.myfinances.ui.SectionsRegistroPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
@@ -30,6 +31,12 @@ class RegistroFragment : Fragment() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = view.findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+
+        binding.floatingActionButton.setOnClickListener {
+            val newFragment = DialogRegistroFragment()
+            activity?.let { it1 -> newFragment.show(it1.supportFragmentManager, "dialog") }
+        }
+
     }
 
     override fun onDestroyView() {
