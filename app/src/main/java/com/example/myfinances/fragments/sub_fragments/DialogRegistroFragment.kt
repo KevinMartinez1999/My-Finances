@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.DialogFragment
 import com.example.myfinances.R
@@ -34,10 +35,9 @@ class DialogRegistroFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout to use as dialog or embedded fragment
-        //return inflater.inflate(R.layout.fragment_registro_ingreso, container, false)
         _binding = FragmentDialogRegistroBinding.inflate(inflater, container, false)
 
-        binding.accountsspinner.visibility = View.VISIBLE
+        binding.ingresospinner.visibility = View.VISIBLE
         binding.buttoningreso.isEnabled = false
         binding.valuetext.text = getString(R.string.valueIngresos)
 
@@ -63,24 +63,27 @@ class DialogRegistroFragment : DialogFragment() {
             }
 
             buttongasto.setOnClickListener {
-                flag=true;
-                hacerVisibleGasto()
+                flag=true
+                makeVisibleGasto()
             }
 
             buttoningreso.setOnClickListener {
                 flag=false
-                hacerVisibleIngreso()
+                makeVisibleIngreso()
             }
 
             registerbutton.setOnClickListener {
-                registrarenserver(flag)
+                if(inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) registrarEnServer(flag) else{
+                    Toast.makeText(requireContext(),"Registro Inválido", Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
 
         return binding.root
     }
 
-    private fun registrarenserver(type:Boolean) {
+    private fun registrarEnServer(type:Boolean) {
         with(binding){
             val db = Firebase.firestore
             var category = ""
@@ -88,11 +91,11 @@ class DialogRegistroFragment : DialogFragment() {
             if(type){
                 val document = db.collection("registrogasto").document()
                 id = document.id
-                category = categoryspiner.selectedItem.toString()
+                category = gastospiner.selectedItem.toString()
             }else{
                 val document = db.collection("registroingreso").document()
                 id = document.id
-                category = accountsspinner.selectedItem.toString()
+                category = ingresospinner.selectedItem.toString()
             }
 
             val fecha = inputdate.text.toString()
@@ -101,39 +104,40 @@ class DialogRegistroFragment : DialogFragment() {
 
             val registro = RegistroIngreso(id = id, date = fecha, account = cuenta, description = category, amount = monto)
             if(type){
-                db.collection("registrogasto").document().set(registro)
+                db.collection("registrogasto").document(id).set(registro)
             }else{
-                db.collection("registroingreso").document().set(registro)
+                db.collection("registroingreso").document(id).set(registro)
             }
-            clearviews()
+            clearViews()
+            Toast.makeText(requireContext(),"Registro Exitoso", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun clearviews() {
+    private fun clearViews() {
             with(binding) {
                 inputdate.setText("")
                 inputvalue.setText("")
             }
     }
 
-    private fun hacerVisibleIngreso() {
+    private fun makeVisibleIngreso() {
         with(binding) {
-            categoryspiner.visibility = View.GONE
-            accountsspinner.visibility = View.VISIBLE
+            gastospiner.visibility = View.GONE
+            ingresospinner.visibility = View.VISIBLE
             categoryaccount.text = getString(R.string.account2)
-            categorytext.text = getString(R.string.category2)
+            categorydescription.text = getString(R.string.category2)
             buttoningreso.isEnabled = false
             buttongasto.isEnabled = true
             valuetext.text = getString(R.string.valueIngresos)
         }
     }
 
-    private fun hacerVisibleGasto() {
+    private fun makeVisibleGasto() {
         with(binding) {
-            categoryspiner.visibility = View.VISIBLE
-            accountsspinner.visibility = View.GONE
+            gastospiner.visibility = View.VISIBLE
+            ingresospinner.visibility = View.GONE
             categoryaccount.text = getString(R.string.account)
-            categorytext.text = getString(R.string.category)
+            categorydescription.text = getString(R.string.category)
             buttoningreso.isEnabled = true
             buttongasto.isEnabled = false
             valuetext.text = getString(R.string.valueGastos)
