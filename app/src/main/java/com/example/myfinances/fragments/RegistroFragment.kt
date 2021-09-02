@@ -12,6 +12,7 @@ import com.example.myfinances.databinding.FragmentRegistroBinding
 import com.example.myfinances.fragments.sub_fragments.DialogRegistroFragment
 import com.example.myfinances.ui.SectionsRegistroPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
 class RegistroFragment : Fragment() {
