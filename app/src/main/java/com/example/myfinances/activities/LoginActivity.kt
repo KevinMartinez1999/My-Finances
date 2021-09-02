@@ -1,6 +1,5 @@
 package com.example.myfinances.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -9,119 +8,128 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.example.myfinances.R
-import com.example.myfinances.Users
 import com.example.myfinances.databinding.ActivityLoginBinding
 import com.example.myfinances.utils.EMPTY
 import com.example.myfinances.utils.emailValidator
 import com.example.myfinances.utils.passValidator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
-    private var banEmail = false
-    private var banPass = false
-    private var usuarios: MutableList<Users> = mutableListOf()
-    private lateinit var nick: String
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(loginBinding.root)
+        val view = loginBinding.root
+        setContentView(view)
 
-        // Modo test: Usar para evitar registro ya que no se cuenta con base de datos aun
-        usuarios.add(Users("kdmz1999", "kevinmartinez9907@gmail.com", "123456"))
+        with(loginBinding) {
 
-        /*Cuando le damos click a la barra de texto de la contraseña
-        * luego de que tenia el aviso de error, este se va a quitar para permitir
-        * escribir de nuevo mas comodamente*/
-        loginBinding.textPassword.setOnClickListener {
-            if (loginBinding.password.error == getString(R.string.errorpass)) {
-                loginBinding.password.error = null
-                loginBinding.textPassword.setText(EMPTY)
-            }
-        }
-
-        loginBinding.mostrar.setOnClickListener {
-            if (!loginBinding.mostrar.isChecked) {
-                loginBinding.textPassword.transformationMethod =
-                    PasswordTransformationMethod.getInstance()
-            } else {
-                loginBinding.textPassword.transformationMethod =
-                    HideReturnsTransformationMethod.getInstance()
-            }
-        }
-
-        /*Verifica cada momneto como cambia lo que hay en la barra de correo
-        * para verificar si es un correo valido o no*/
-        loginBinding.textEmail.doAfterTextChanged {
-            if (!emailValidator(loginBinding.textEmail.text.toString())) {
-                loginBinding.email.error = getString(R.string.email_invalido)
-            } else {
-                loginBinding.email.error = null
-            }
-        }
-
-        /*Verifica cada momento como cambia lo que hay en la barra de contraseña
-        * para verificar si es valida o no*/
-        loginBinding.textPassword.doAfterTextChanged {
-            if (!passValidator(loginBinding.textPassword.text.toString())) {
-                loginBinding.password.error = getString(R.string.digits6)
-            } else {
-                loginBinding.password.error = null
-            }
-        }
-
-        /*Funcion que se ejecuta cuando damos en el boton de inicio de sesion*/
-        loginBinding.send.setOnClickListener {
-            for (u in usuarios) {
-                if (loginBinding.textEmail.text.toString() == u.email) {
-                    banEmail = true
-                    if (loginBinding.textPassword.text.toString() == u.password) {
-                        banPass = true
-                        nick = u.nickname.toString()
-                    }
+            /*Cuando le damos click a la barra de texto de la contraseña
+            * luego de que tenia el aviso de error, este se va a quitar para permitir
+            * escribir de nuevo mas comodamente*/
+            textPassword.setOnClickListener {
+                if (password.error == getString(R.string.errorpass)) {
+                    password.error = null
+                    textPassword.setText(EMPTY)
                 }
             }
 
-            if (banEmail) {
-                if (banPass) {
-                    banEmail = false
-                    banPass = false
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("email", loginBinding.textEmail.text.toString())
-                    intent.putExtra("pass", loginBinding.textPassword.text.toString())
-                    intent.putExtra("nick", nick)
-                    startActivity(intent)
-                    finish()
+            /*Muestra la contraseña y la oculta*/
+            mostrar.setOnClickListener {
+                if (!mostrar.isChecked) {
+                    textPassword.transformationMethod =
+                        PasswordTransformationMethod.getInstance()
                 } else {
-                    loginBinding.password.error = getString(R.string.errorpass)
+                    textPassword.transformationMethod =
+                        HideReturnsTransformationMethod.getInstance()
                 }
-            } else {
-                Toast.makeText(this, getString(R.string.errorlogin), Toast.LENGTH_LONG).show()
+            }
+
+            /*Verifica cada momneto como cambia lo que hay en la barra de correo
+            * para verificar si es un correo valido o no*/
+            textEmail.doAfterTextChanged {
+                if (!emailValidator(textEmail.text.toString())) {
+                    email.error = getString(R.string.email_invalido)
+                } else {
+                    email.error = null
+                }
+            }
+
+            /*Verifica cada momento como cambia lo que hay en la barra de contraseña
+            * para verificar si es valida o no*/
+            textPassword.doAfterTextChanged {
+                if (!passValidator(textPassword.text.toString())) {
+                    password.error = getString(R.string.digits6)
+                } else {
+                    password.error = null
+                }
+            }
+
+            /*Funcion que se ejecuta cuando damos en el boton de inicio de sesion*/
+            send.setOnClickListener {
+                auth = Firebase.auth
+                val email = textEmail.text.toString()
+                val password = textPassword.text.toString()
+                if (email.isNotEmpty() && password.isNotEmpty()) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                //val user = auth.currentUser
+                                goToMainActivity()
+                            } else {
+                                when (task.exception?.localizedMessage) {
+                                    "The email address is badly formatted." -> {
+                                        toastMessage(getString(R.string.email_incorrecto))
+                                    }
+                                    "There is no user record corresponding to this identifier. The user may have been deleted." -> {
+                                        toastMessage(getString(R.string.usuario_no_existe))
+                                    }
+                                    "The password is invalid or the user does not have a password." -> {
+                                        toastMessage(getString(R.string.pass_incorrecta))
+                                    }
+                                }
+                                clearViews()
+                            }
+                        }
+                } else {
+                    toastMessage(getString(R.string.campos_vacios))
+                }
+            }
+
+            register.setOnClickListener {
+                goToRegisterActivity()
             }
         }
+    }
 
-        loginBinding.register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivityForResult(intent, 1)
+    private fun clearViews() {
+        with(loginBinding) {
+            textEmail.setText(EMPTY)
+            textPassword.setText(EMPTY)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            val user: Users = data!!.getSerializableExtra("user") as Users
-            loginBinding.textEmail.setText(EMPTY)
-            loginBinding.textPassword.setText(EMPTY)
-            usuarios.add(user)
-            //guardarusuario(user.nickname.toString(), user.email.toString(), user.password.toString())
-        }
+    private fun goToRegisterActivity() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
-    /*
-    private fun guardarusuario(name: String?, email: String?, password: String?) {
-        val usuario = User(id = Types.NULL, nombre = name, email = email, password = password)
-        val userdao: UserDAO = MyFinancesApp.database.userDao()
-        userdao.insertUser(usuario)
-    }*/
+    private fun goToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun toastMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }

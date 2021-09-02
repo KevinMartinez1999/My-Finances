@@ -12,15 +12,16 @@ import com.example.myfinances.ui.SectionsEstadisticasPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 class EstadisticasFragment : Fragment() {
-    private lateinit var estadisticasBinding: FragmentEstadisticasBinding
+    private var _binding: FragmentEstadisticasBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        estadisticasBinding = FragmentEstadisticasBinding.inflate(inflater, container, false)
-        return estadisticasBinding.root
+        _binding = FragmentEstadisticasBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,5 +30,10 @@ class EstadisticasFragment : Fragment() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = view.findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -1,78 +1,119 @@
 package com.example.myfinances.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.example.myfinances.R
-import com.example.myfinances.Users
 import com.example.myfinances.databinding.ActivityRegisterBinding
-import com.example.myfinances.utils.emailValidator
-import com.example.myfinances.utils.nameValidator
-import com.example.myfinances.utils.passValidator
+import com.example.myfinances.utils.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var registerBinding: ActivityRegisterBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(registerBinding.root)
+        val view = registerBinding.root
+        setContentView(view)
 
-        registerBinding.textRepeatPassword.setOnClickListener {
-            if (registerBinding.repeatPassword.error == getString(R.string.no_coincidencia)) {
-                registerBinding.repeatPassword.error = null
-                registerBinding.textRepeatPassword.setText("")
-            }
-        }
+        with(registerBinding) {
 
-        registerBinding.registrar.setOnClickListener {
-            val name = registerBinding.textUsername.text.toString()
-            val email = registerBinding.textEmail.text.toString()
-            val password = registerBinding.textPassword.text.toString()
-            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                if (password == registerBinding.textRepeatPassword.text.toString()) {
-                    registerBinding.repeatPassword.error = null
-                    val intent = Intent()
-                    val bundle = Bundle()
-                    val user = Users(name, email, password)
-                    bundle.putSerializable("user", user)
-                    intent.putExtras(bundle)
-                    setResult(Activity.RESULT_OK, intent)
-                    finish()
-                } else {
-                    registerBinding.repeatPassword.error = getString(R.string.no_coincidencia)
+            textRepeatPassword.setOnClickListener {
+                if (repeatPassword.error == getString(R.string.no_coincidencia)) {
+                    repeatPassword.error = null
+                    textRepeatPassword.setText(EMPTY)
                 }
-            } else {
-                Toast.makeText(this, getString(R.string.errorregister), Toast.LENGTH_LONG).show()
             }
-        }
 
-        registerBinding.textUsername.doAfterTextChanged {
-            if (!nameValidator(registerBinding.textUsername.text.toString())) {
-                registerBinding.username.error = getString(R.string.digits8)
-            } else {
-                registerBinding.username.error = null
+            registrar.setOnClickListener {
+                val name = textUsername.text.toString()
+                val email = textEmail.text.toString()
+                val password = textPassword.text.toString()
+                if (name.isNotEmpty() && email.isNotEmpty() &&
+                    password.isNotEmpty() && (name.length >= MIN_LENGHT_USER)
+                ) {
+                    if (password == textRepeatPassword.text.toString()) {
+                        repeatPassword.error = null
+                        crearUsuario(email, password)
+                    } else {
+                        repeatPassword.error = getString(R.string.no_coincidencia)
+                    }
+                } else {
+                    toastMessage(getString(R.string.campos_vacios))
+                }
             }
-        }
 
-        registerBinding.textEmail.doAfterTextChanged {
-            if (!emailValidator(registerBinding.textEmail.text.toString())) {
-                registerBinding.email.error = getString(R.string.email_invalido)
-            } else {
-                registerBinding.email.error = null
+            textUsername.doAfterTextChanged {
+                if (!nameValidator(textUsername.text.toString())) {
+                    username.error = getString(R.string.digits8)
+                } else {
+                    username.error = null
+                }
             }
-        }
 
-        registerBinding.textPassword.doAfterTextChanged {
-            if (!passValidator(registerBinding.textPassword.text.toString())) {
-                registerBinding.password.error = getString(R.string.digits6)
-            } else {
-                registerBinding.password.error = null
+            textEmail.doAfterTextChanged {
+                if (!emailValidator(textEmail.text.toString())) {
+                    email.error = getString(R.string.email_invalido)
+                } else {
+                    email.error = null
+                }
+            }
+
+            textPassword.doAfterTextChanged {
+                if (!passValidator(textPassword.text.toString())) {
+                    password.error = getString(R.string.digits6)
+                } else {
+                    password.error = null
+                }
             }
         }
+    }
+
+    private fun crearUsuario(email: String, password: String) {
+        auth = Firebase.auth
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //val user = auth.currentUser
+                    gotoLoginActivity()
+                } else {
+                    if (task.exception?.localizedMessage == "The email address is badly formatted.") {
+                        toastMessage(getString(R.string.email_incorrecto))
+                    } else if (task.exception?.localizedMessage == "The given password is invalid. [ Password should be at least 6 characters ]") {
+                        toastMessage(getString(R.string.pass_invalida))
+                    }
+                    clearViews()
+                }
+            }
+    }
+
+    private fun clearViews() {
+        with(registerBinding) {
+            textUsername.setText(EMPTY)
+            textEmail.setText(EMPTY)
+            textPassword.setText(EMPTY)
+            textRepeatPassword.setText(EMPTY)
+        }
+    }
+
+    private fun gotoLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun toastMessage(message: String) {
+        Toast.makeText(
+            this,
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
