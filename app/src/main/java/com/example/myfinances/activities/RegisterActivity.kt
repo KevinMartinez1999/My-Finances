@@ -6,10 +6,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.example.myfinances.R
+import com.example.myfinances.data.server.UserServer
 import com.example.myfinances.databinding.ActivityRegisterBinding
 import com.example.myfinances.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
@@ -22,6 +24,8 @@ class RegisterActivity : AppCompatActivity() {
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = registerBinding.root
         setContentView(view)
+
+        registerBinding.radioButtonHombre.isChecked = true
 
         with(registerBinding) {
 
@@ -36,11 +40,29 @@ class RegisterActivity : AppCompatActivity() {
                 val name = textUsername.text.toString()
                 val email = textEmail.text.toString()
                 val password = textPassword.text.toString()
-                if (name.isNotEmpty() && email.isNotEmpty() &&
-                    password.isNotEmpty() && (name.length >= MIN_LENGHT_USER)
+                var sexo = ""
+                var defaultPicture = ""
+                when {
+                    radioButtonHombre.isChecked -> {
+                        sexo = getString(R.string.hombre)
+                        defaultPicture =
+                            "https://firebasestorage.googleapis.com/v0/b/my-finances-6136c.appspot.com/o/hombre.jpg?alt=media&token=c7b7ea07-3372-4f6d-bce1-a92b6d904dec"
+                    }
+                    radioButtonMujer.isChecked -> {
+                        sexo = getString(R.string.mujer)
+                        defaultPicture =
+                            "https://firebasestorage.googleapis.com/v0/b/my-finances-6136c.appspot.com/o/mujer.jpg?alt=media&token=77e1615f-da72-4c2a-a252-b7d6fd587dea"
+                    }
+                }
+                if (name.isNotEmpty() &&
+                    email.isNotEmpty() &&
+                    password.isNotEmpty() &&
+                    (name.length >= MIN_LENGHT_USER) &&
+                    (radioButtonHombre.isChecked || radioButtonMujer.isChecked)
                 ) {
                     if (password == textRepeatPassword.text.toString()) {
                         repeatPassword.error = null
+                        crearUserServer(name, email, sexo, defaultPicture)
                         crearUsuario(email, password)
                     } else {
                         repeatPassword.error = getString(R.string.no_coincidencia)
@@ -74,6 +96,23 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun crearUserServer(name: String,
+                                email: String,
+                                sexo: String,
+                                defaultPicture: String) {
+        val db = Firebase.firestore
+        val document = db.collection("users").document()
+        val id = document.id
+        val userServer = UserServer(
+            id = id,
+            nickname = name,
+            email = email,
+            sexo = sexo,
+            picture = defaultPicture
+        )
+        db.collection("users").document(id).set(userServer)
     }
 
     private fun crearUsuario(email: String, password: String) {
