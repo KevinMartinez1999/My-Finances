@@ -2,6 +2,7 @@ package com.example.myfinances.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -62,8 +63,7 @@ class RegisterActivity : AppCompatActivity() {
                 ) {
                     if (password == textRepeatPassword.text.toString()) {
                         repeatPassword.error = null
-                        crearUserServer(name, email, sexo, defaultPicture)
-                        crearUsuario(email, password)
+                        crearUsuario(name, email, sexo, defaultPicture, password)
                     } else {
                         repeatPassword.error = getString(R.string.no_coincidencia)
                     }
@@ -98,13 +98,12 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun crearUserServer(name: String,
+    private fun crearUserServer(id: String,
+                                name: String,
                                 email: String,
                                 sexo: String,
                                 defaultPicture: String) {
         val db = Firebase.firestore
-        val document = db.collection("users").document()
-        val id = document.id
         val userServer = UserServer(
             id = id,
             nickname = name,
@@ -113,15 +112,19 @@ class RegisterActivity : AppCompatActivity() {
             picture = defaultPicture
         )
         db.collection("users").document(id).set(userServer)
+        gotoLoginActivity()
     }
 
-    private fun crearUsuario(email: String, password: String) {
+    private fun crearUsuario(name:String, email: String, sexo: String, defaultPicture: String, password: String) {
         auth = Firebase.auth
+        var uid: String
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    //val user = auth.currentUser
-                    gotoLoginActivity()
+                    val user = auth.currentUser
+                    uid =  user?.uid.toString()
+                    crearUserServer(uid, name, email, sexo, defaultPicture)
+                    toastMessage("Usuario creado")
                 } else {
                     if (task.exception?.localizedMessage == "The email address is badly formatted.") {
                         toastMessage(getString(R.string.email_incorrecto))
