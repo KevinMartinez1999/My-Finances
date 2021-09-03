@@ -28,14 +28,15 @@ class AjustesFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
 
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result->
-        if(result.resultCode== Activity.RESULT_OK){
-            val data: Intent? = result.data
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.profileImageView.setImageBitmap(imageBitmap)
-            uploadPhoto()
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                binding.profileImageView.setImageBitmap(imageBitmap)
+                uploadPhoto()
+            }
         }
-    }
 
     private fun uploadPhoto() {
         val currentUser = auth.currentUser
@@ -66,7 +67,11 @@ class AjustesFragment : Fragment() {
                 val documentUpdate = HashMap<String, Any>()
                 documentUpdate["picture"] = downloadUrl
                 db.collection("users").document(id).update(documentUpdate).addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Fotografía actualizada con éxito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Fotografía actualizada con éxito",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -82,11 +87,11 @@ class AjustesFragment : Fragment() {
         auth = Firebase.auth
         val db = Firebase.firestore
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             db.collection("users").get().addOnSuccessListener { result ->
-                for(document in result){
+                for (document in result) {
                     val user = document.toObject<UserServer>()
-                    if(user.id == currentUser.uid){
+                    if (user.id == currentUser.uid) {
                         Picasso.get().load(user.picture).into(binding.profileImageView)
                         binding.profileUsername.text = user.nickname
                     }
@@ -94,7 +99,7 @@ class AjustesFragment : Fragment() {
             }
         }
 
-        with(binding){
+        with(binding) {
             addPhotoButton.setOnClickListener {
                 photointent()
             }

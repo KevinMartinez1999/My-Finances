@@ -8,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.DialogFragment
 import com.example.myfinances.R
-import com.example.myfinances.data.server.RegistroIngreso
+import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentDialogRegistroBinding
-import com.google.firebase.auth.FirebaseAuth
+import com.example.myfinances.utils.EMPTY
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
@@ -21,13 +20,11 @@ import java.util.*
 
 class DialogRegistroFragment : DialogFragment() {
 
-
     private var _binding: FragmentDialogRegistroBinding? = null
     private val binding get() = _binding!!
-    private lateinit var auth: FirebaseAuth
     private var cal = Calendar.getInstance()
     private var fecha: String = ""
-    private var flag: Boolean = false;
+    private var flag: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,18 +60,20 @@ class DialogRegistroFragment : DialogFragment() {
             }
 
             buttongasto.setOnClickListener {
-                flag=true
+                flag = true
                 makeVisibleGasto()
             }
 
             buttoningreso.setOnClickListener {
-                flag=false
+                flag = false
                 makeVisibleIngreso()
             }
 
             registerbutton.setOnClickListener {
-                if(inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) registrarEnServer(flag) else{
-                    Toast.makeText(requireContext(),"Registro Inválido", Toast.LENGTH_SHORT).show()
+                if (inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) {
+                    registrarEnServer(flag)
+                } else {
+                    Toast.makeText(requireContext(), "Registro Inválido", Toast.LENGTH_LONG).show()
                 }
 
             }
@@ -83,16 +82,16 @@ class DialogRegistroFragment : DialogFragment() {
         return binding.root
     }
 
-    private fun registrarEnServer(type:Boolean) {
-        with(binding){
+    private fun registrarEnServer(type: Boolean) {
+        with(binding) {
             val db = Firebase.firestore
-            var category = ""
-            var id = ""
-            if(type){
+            val category: String
+            val id: String
+            if (type) {
                 val document = db.collection("registrogasto").document()
                 id = document.id
                 category = gastospiner.selectedItem.toString()
-            }else{
+            } else {
                 val document = db.collection("registroingreso").document()
                 id = document.id
                 category = ingresospinner.selectedItem.toString()
@@ -102,22 +101,28 @@ class DialogRegistroFragment : DialogFragment() {
             val cuenta = metodoPagoSpinner.selectedItem.toString()
             val monto = inputvalue.text.toString().toLong()
 
-            val registro = RegistroIngreso(id = id, date = fecha, account = cuenta, description = category, amount = monto)
-            if(type){
+            val registro = RegistroServer(
+                id = id,
+                date = fecha,
+                account = cuenta,
+                description = category,
+                amount = monto
+            )
+            if (type) {
                 db.collection("registrogasto").document(id).set(registro)
-            }else{
+            } else {
                 db.collection("registroingreso").document(id).set(registro)
             }
             clearViews()
-            Toast.makeText(requireContext(),"Registro Exitoso", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun clearViews() {
-            with(binding) {
-                inputdate.setText("")
-                inputvalue.setText("")
-            }
+        with(binding) {
+            inputdate.setText(EMPTY)
+            inputvalue.setText(EMPTY)
+        }
     }
 
     private fun makeVisibleIngreso() {
