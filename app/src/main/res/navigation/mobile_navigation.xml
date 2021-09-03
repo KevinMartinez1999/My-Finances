@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_registro">
+
+    <fragment
+        android:id="@+id/navigation_registro"
+        android:name="com.example.myfinances.fragments.RegistroFragment"
+        tools:layout="@layout/fragment_registro" />
+    <fragment
+        android:id="@+id/navigation_estadisticas"
+        android:name="com.example.myfinances.fragments.EstadisticasFragment"
+        tools:layout="@layout/fragment_estadisticas" />
+    <fragment
+        android:id="@+id/navigation_bienes"
+        android:name="com.example.myfinances.fragments.BienesFragment"
+        tools:layout="@layout/fragment_bienes" />
+    <fragment
+        android:id="@+id/navigation_ajustes"
+        android:name="com.example.myfinances.fragments.AjustesFragment"
+        tools:layout="@layout/fragment_ajustes" />
+
+</navigation>
