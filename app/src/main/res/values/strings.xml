@@ -25,7 +25,7 @@
     <string name="ingresos">ingresos</string>
     <string name="gastos">Gastos</string>
     <string name="darkTheme">Modo oscuro</string>
-    <string name="campos_vacios">Verifique que todos los campos estén diligeciados</string>
+    <string name="campos_vacios">Verifique que todos los campos estén diligenciados</string>
     <string name="email_incorrecto">El correo no está escrito correctamente</string>
     <string name="pass_invalida">La contraseña debe contener 6 caracteres mínimo</string>
     <string name="usuario_no_existe">El usuario no existe. Por favor regístrate</string>

@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/ingresos"
         app:cornerRadius="32dp"
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="@string/gastos"
         app:cornerRadius="32dp"
@@ -57,6 +57,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="@string/date"
         android:importantForAutofill="no"
         android:inputType="date"
@@ -72,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="@string/account"
+        android:text="@string/account2"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
 
     <Spinner
         android:id="@+id/metodoPagoSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="189dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
@@ -90,20 +92,20 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryaccount" />
 
     <TextView
-        android:id="@+id/categorytext"
+        android:id="@+id/categorydescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="@string/category"
+        android:text="@string/category2"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/metodoPagoSpinner" />
 
     <Spinner
-        android:id="@+id/categoryspiner"
-        android:layout_width="wrap_content"
+        android:id="@+id/gastospiner"
+        android:layout_width="189dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
@@ -111,19 +113,19 @@
         android:minHeight="48dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categorytext" />
+        app:layout_constraintTop_toBottomOf="@id/categorydescription" />
 
     <Spinner
-        android:id="@+id/accountsspinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ingresospinner"
+        android:layout_width="189dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:entries="@array/ingresoslist"
         android:minHeight="48dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categorytext" />
+        app:layout_constraintTop_toBottomOf="@id/categorydescription" />
 
     <TextView
         android:id="@+id/valuetext"
@@ -138,7 +140,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categorytext" />
+        app:layout_constraintTop_toBottomOf="@+id/categorydescription" />
 
     <EditText
         android:id="@+id/inputvalue"
