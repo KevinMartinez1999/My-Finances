@@ -2,7 +2,6 @@ package com.example.myfinances.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -98,11 +97,13 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun crearUserServer(id: String,
-                                name: String,
-                                email: String,
-                                sexo: String,
-                                defaultPicture: String) {
+    private fun crearUserServer(
+        id: String,
+        name: String,
+        email: String,
+        sexo: String,
+        defaultPicture: String
+    ) {
         val db = Firebase.firestore
         val userServer = UserServer(
             id = id,
@@ -115,14 +116,20 @@ class RegisterActivity : AppCompatActivity() {
         gotoLoginActivity()
     }
 
-    private fun crearUsuario(name:String, email: String, sexo: String, defaultPicture: String, password: String) {
+    private fun crearUsuario(
+        name: String,
+        email: String,
+        sexo: String,
+        defaultPicture: String,
+        password: String
+    ) {
         auth = Firebase.auth
         var uid: String
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    uid =  user?.uid.toString()
+                    uid = user?.uid.toString()
                     crearUserServer(uid, name, email, sexo, defaultPicture)
                     toastMessage("Usuario creado")
                 } else {
