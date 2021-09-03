@@ -41,6 +41,9 @@
     <string name="valueIngresos">Valor del ingreso</string>
     <string name="valueGastos">Valor del gasto</string>
     <string name="digitvalue">Digite el Monto</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="otro">Otro</string>
     <string-array name="categorylist">
         <item>Abarrotes</item>
         <item>Arrendamiento</item>
