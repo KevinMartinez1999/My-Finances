@@ -34,7 +34,6 @@ class DiarioFragment : Fragment() {
             setHasFixedSize(false)
         }
         loadFromServer()
-
         return binding.root
     }
 
@@ -44,6 +43,7 @@ class DiarioFragment : Fragment() {
             for (document in result) {
                 listRegistros.add(document.toObject())
             }
+            registroAdapter.appendItem(listRegistros)
         }
         db.collection("registrogasto").get().addOnSuccessListener { result ->
             for (document in result) {
