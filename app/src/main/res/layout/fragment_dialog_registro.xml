@@ -9,18 +9,31 @@
     app:layout_scrollFlags="snapMargins"
     tools:context=".fragments.sub_fragments.DialogRegistroFragment">
 
+    <ImageView
+        android:id="@+id/button_cancel"
+        android:layout_width="38dp"
+        android:layout_height="33dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:minWidth="48dp"
+        android:minHeight="32dp"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck"
+        android:focusable="true" />
+
     <TextView
         android:id="@+id/titledialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="@string/registertype"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_cancel" />
 
 
     <Button
@@ -66,7 +79,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttoningreso" />
+        app:layout_constraintTop_toBottomOf="@+id/buttoningreso"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/categoryaccount"
@@ -156,7 +170,8 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valuetext" />
+        app:layout_constraintTop_toBottomOf="@+id/valuetext"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/registerbutton"

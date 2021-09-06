@@ -48,6 +48,10 @@ class DialogRegistroFragment : DialogFragment() {
             binding.inputdate.setText(fecha)
         }
 
+        binding.buttonCancel.setOnClickListener {
+            onDestroyView()
+        }
+
         with(binding) {
             inputdate.setOnClickListener {
                 DatePickerDialog(
@@ -72,6 +76,10 @@ class DialogRegistroFragment : DialogFragment() {
             registerbutton.setOnClickListener {
                 if (inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) {
                     registrarEnServer(flag)
+                    /*val newFragment = DiarioFragment()
+                    val transaction = activity?.supportFragmentManager!!.beginTransaction()
+                    transaction.replace(R.id., newFragment)
+                    transaction.commit()*/
                 } else {
                     Toast.makeText(requireContext(), "Registro Inválido", Toast.LENGTH_LONG).show()
                 }

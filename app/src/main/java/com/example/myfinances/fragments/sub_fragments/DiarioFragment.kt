@@ -1,6 +1,7 @@
 package com.example.myfinances.fragments.sub_fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,11 @@ class DiarioFragment : Fragment() {
             setHasFixedSize(false)
         }
         loadFromServer()
+        binding.swiperefresh.setOnRefreshListener {
+            loadFromServer()
+            binding.swiperefresh.isRefreshing = false
+        }
+
         return binding.root
     }
 
@@ -60,5 +66,10 @@ class DiarioFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("Pause","entró")
     }
 }
