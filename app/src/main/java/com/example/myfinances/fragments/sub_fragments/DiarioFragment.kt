@@ -18,6 +18,7 @@ class DiarioFragment : Fragment() {
 
     private var _binding: FragmentDiarioBinding? = null
     private val binding get() = _binding!!
+    private val db = Firebase.firestore
     private lateinit var registroAdapter: RegistroAdapter
     private var listRegistros: MutableList<RegistroServer> = arrayListOf()
 
@@ -35,6 +36,7 @@ class DiarioFragment : Fragment() {
             setHasFixedSize(false)
         }
         loadFromServer()
+
         binding.swiperefresh.setOnRefreshListener {
             loadFromServer()
             binding.swiperefresh.isRefreshing = false
@@ -44,14 +46,13 @@ class DiarioFragment : Fragment() {
     }
 
     private fun loadFromServer() {
-        val db = Firebase.firestore
-        db.collection("registroingreso").get().addOnSuccessListener { result ->
-            for (document in result) {
-                listRegistros.add(document.toObject())
-            }
-            registroAdapter.appendItem(listRegistros)
-        }
-        db.collection("registrogasto").get().addOnSuccessListener { result ->
+        loadDataBase("registroingreso")
+        loadDataBase("registrogasto")
+        listRegistros.clear()
+    }
+
+    private fun loadDataBase(database: String) {
+        db.collection(database).get().addOnSuccessListener { result ->
             for (document in result) {
                 listRegistros.add(document.toObject())
             }
@@ -66,10 +67,5 @@ class DiarioFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Pause","entró")
     }
 }
