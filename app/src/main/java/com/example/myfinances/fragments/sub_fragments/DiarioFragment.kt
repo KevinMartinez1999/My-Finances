@@ -69,7 +69,12 @@ class DiarioFragment : Fragment() {
     }
 
     override fun onPause() {
+        Log.d("Hola","entró1")
         super.onPause()
-        Log.d("Pause","entró")
+    }
+
+    override fun onResume() {
+        Log.d("Hola","entró2")
+        super.onResume()
     }
 }

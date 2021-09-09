@@ -76,10 +76,12 @@ class DialogRegistroFragment : DialogFragment() {
             registerbutton.setOnClickListener {
                 if (inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) {
                     registrarEnServer(flag)
-                    /*val newFragment = DiarioFragment()
+                    //val View: View? = activity?.findViewById(R.id.tab)
+                    //val fragment = supportFragmentManager.findFragmentById(R.id.example_fragment) as ExampleFragment
+                    val newFragment = DiarioFragment()
                     val transaction = activity?.supportFragmentManager!!.beginTransaction()
-                    transaction.replace(R.id., newFragment)
-                    transaction.commit()*/
+                    transaction.replace(R.id.view_pager, newFragment)
+                    transaction.commit()
                 } else {
                     Toast.makeText(requireContext(), "Registro Inválido", Toast.LENGTH_LONG).show()
                 }
