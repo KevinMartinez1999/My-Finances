@@ -11,17 +11,17 @@
 
     <ImageView
         android:id="@+id/button_cancel"
-        android:layout_width="38dp"
-        android:layout_height="33dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:clickable="true"
         android:contentDescription="@string/app_name"
+        android:focusable="true"
         android:minWidth="48dp"
-        android:minHeight="32dp"
+        android:minHeight="48dp"
         android:src="@drawable/ic_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck"
-        android:focusable="true" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/titledialog"
