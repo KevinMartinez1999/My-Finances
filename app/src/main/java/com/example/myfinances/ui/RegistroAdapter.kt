@@ -3,7 +3,9 @@ package com.example.myfinances.ui
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
@@ -22,6 +24,13 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        for ((i, item) in listRegistro.withIndex()){
+            for ((a,item2) in listRegistro.withIndex()){
+                if((item.date == item2.date) and (i != a)){
+                    item2.date = ""
+                }
+            }
+        }
         holder.bind(listRegistro[position])
         holder.itemView.setOnClickListener { onItemClicked(listRegistro[position]) }
     }
@@ -31,10 +40,12 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun appendItem(newItems: MutableList<RegistroServer>) {
-        listRegistro.clear()
+    fun appendItem(newItems: MutableList<RegistroServer>, flag: Boolean) {
         listRegistro.addAll(newItems)
-        notifyDataSetChanged()
+        if(flag) {
+            notifyDataSetChanged()
+            listRegistro.clear()
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,8 +55,13 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
             with(binding) {
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
+                if(registro.date==""){
+                    binding.card.updateLayoutParams { height = 42 }
+                    fecha.visibility =  GONE
+                }else  {
+                    fecha.text = registro.date
+                }
                 value.text = "$ $number"
-                fecha.text = registro.date
                 tipo.text = registro.description
             }
         }

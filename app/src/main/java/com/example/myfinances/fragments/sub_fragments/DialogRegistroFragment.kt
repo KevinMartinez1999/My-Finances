@@ -13,6 +13,7 @@ import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentDialogRegistroBinding
 import com.example.myfinances.utils.EMPTY
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
@@ -76,12 +77,6 @@ class DialogRegistroFragment : DialogFragment() {
             registerbutton.setOnClickListener {
                 if (inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) {
                     registrarEnServer(flag)
-                    //val View: View? = activity?.findViewById(R.id.tab)
-                    //val fragment = supportFragmentManager.findFragmentById(R.id.example_fragment) as ExampleFragment
-                    val newFragment = DiarioFragment()
-                    val transaction = activity?.supportFragmentManager!!.beginTransaction()
-                    transaction.replace(R.id.view_pager, newFragment)
-                    transaction.commit()
                 } else {
                     Toast.makeText(requireContext(), "Registro Inválido", Toast.LENGTH_LONG).show()
                 }
@@ -97,12 +92,13 @@ class DialogRegistroFragment : DialogFragment() {
             val db = Firebase.firestore
             val category: String
             val id: String
+            val uid = Firebase.auth.currentUser?.uid.toString()
             if (type) {
-                val document = db.collection("registrogasto").document()
+                val document = db.collection("registro").document(uid).collection("gastos").document()
                 id = document.id
                 category = gastospiner.selectedItem.toString()
             } else {
-                val document = db.collection("registroingreso").document()
+                val document = db.collection("registro").document(uid).collection("ingresos").document()
                 id = document.id
                 category = ingresospinner.selectedItem.toString()
             }
@@ -119,9 +115,9 @@ class DialogRegistroFragment : DialogFragment() {
                 amount = monto
             )
             if (type) {
-                db.collection("registrogasto").document(id).set(registro)
+                db.collection("registro").document(uid).collection("gastos").document(id).set(registro)
             } else {
-                db.collection("registroingreso").document(id).set(registro)
+                db.collection("registro").document(uid).collection("ingresos").document(id).set(registro)
             }
             clearViews()
             Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
