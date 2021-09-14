@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
@@ -24,13 +24,7 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        for ((i, item) in listRegistro.withIndex()){
-            for ((a,item2) in listRegistro.withIndex()){
-                if((item.date == item2.date) and (i != a)){
-                    item2.date = ""
-                }
-            }
-        }
+        eliminarduplicados(listRegistro)
         holder.bind(listRegistro[position])
         holder.itemView.setOnClickListener { onItemClicked(listRegistro[position]) }
     }
@@ -48,16 +42,28 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
         }
     }
 
+    private fun eliminarduplicados(list: MutableList<RegistroServer>) {
+        for ((i, item) in list.withIndex()) {
+            for ((a, item2) in list.withIndex()) {
+                if ((item.date != "") and (item2.date != "")) {
+                    if ((item.date == item2.date) and (i != a)) {
+                        item2.date = ""
+                    }
+                }
+            }
+        }
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CardViewRegistroItemBinding.bind(view)
         @SuppressLint("SetTextI18n")
         fun bind(registro: RegistroServer) {
             with(binding) {
+                fecha.visibility = VISIBLE
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
-                if(registro.date==""){
-                    binding.card.updateLayoutParams { height = 42 }
-                    fecha.visibility =  GONE
+                if(registro.date?.isEmpty() == true) {
+                    fecha.visibility = GONE
                 }else  {
                     fecha.text = registro.date
                 }

@@ -1,6 +1,7 @@
 package com.example.myfinances.fragments.sub_fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,12 @@ class DiarioFragment : Fragment() {
     }
 
     private fun loadFromServer() {
-        loadDataBase("ingresos", false)
+        val uid = Firebase.auth.currentUser?.uid.toString()
+        var flag = false
+        db.collection("registro").document(uid).collection("gastos").get().addOnSuccessListener { result->
+            if (result.isEmpty) flag = true
+        }
+        loadDataBase("ingresos", flag)
         loadDataBase("gastos", true)
         listRegistros.clear()
     }
