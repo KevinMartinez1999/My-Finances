@@ -112,7 +112,8 @@ class DialogRegistroFragment : DialogFragment() {
                 date = fecha,
                 account = cuenta,
                 description = category,
-                amount = monto
+                amount = monto,
+                type = type
             )
             if (type) {
                 db.collection("registro").document(uid).collection("gastos").document(id).set(registro)

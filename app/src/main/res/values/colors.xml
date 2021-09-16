@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#AA0000</color>
+    <color name="blue">#0018B3</color>
     <!-- google's material design colours from
     http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <!--reds-->

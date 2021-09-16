@@ -5,5 +5,6 @@ class RegistroServer (
     var date: String? = null,
     val account: String? = null,
     val description: String? = null,
-    val amount: Long? = null
+    val amount: Long? = null,
+    val type: Boolean? = null
 )
