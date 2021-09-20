@@ -97,8 +97,8 @@ class MensualFragment : Fragment() {
         _binding = null
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onResume() {
+        super.onResume()
         binding.spinnerMonth.setSelection(0)
     }
 }
