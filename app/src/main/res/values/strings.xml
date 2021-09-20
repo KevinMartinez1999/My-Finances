@@ -45,11 +45,15 @@
     <string name="mujer">Mujer</string>
     <string name="otro">Otro</string>
     <string-array name="categorylist">
-        <item>Abarrotes</item>
-        <item>Arrendamiento</item>
-        <item>Entretenimiento</item>
-        <item>Vestimenta</item>
-        <item>Putas</item>
+        <item>Alimentación</item>
+        <item>Vivienda</item>
+        <item>Transporte</item>
+        <item>Salud y autocuidado</item>
+        <item>Entretenimiento y diversión</item>
+        <item>Vestuario</item>
+        <item>Educación</item>
+        <item>Comunicaciones</item>
+        <item>Otro gasto</item>
     </string-array>
     <string-array name="accountlist">
         <item>Efectivo</item>
@@ -57,8 +61,27 @@
         <item>Tarjeta de Crédito</item>
     </string-array>
     <string-array name="ingresoslist">
-        <item>Sueldo</item>
-        <item>Ingresos Ocasionales</item>
-        <item>Otros</item>
+        <item>Salario</item>
+        <item>Subsidio</item>
+        <item>Dinero mensual</item>
+        <item>Arriendo de bienes raíces</item>
+        <item>Comisiones</item>
+        <item>Bonos</item>
+        <item>Otro ingreso</item>
+    </string-array>
+    <string-array name="months">
+        <item>Seleccione el mes</item>
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Septiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
     </string-array>
 </resources>

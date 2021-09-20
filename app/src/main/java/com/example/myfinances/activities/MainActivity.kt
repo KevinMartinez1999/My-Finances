@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.myfinances.R
 import com.example.myfinances.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.logout_menu -> {
                 val intent = Intent(this, LoginActivity::class.java)
+                FirebaseAuth.getInstance().signOut()
                 startActivity(intent)
                 finish()
             }
