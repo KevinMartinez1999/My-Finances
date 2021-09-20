@@ -25,7 +25,7 @@ class DialogRegistroFragment : DialogFragment() {
     private val binding get() = _binding!!
     private var cal = Calendar.getInstance()
     private var fecha: String = ""
-    private var flag: Boolean = false
+    private var flag: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,12 +66,12 @@ class DialogRegistroFragment : DialogFragment() {
             }
 
             buttongasto.setOnClickListener {
-                flag = true
+                flag = false
                 makeVisibleGasto()
             }
 
             buttoningreso.setOnClickListener {
-                flag = false
+                flag = true
                 makeVisibleIngreso()
             }
 
@@ -95,13 +95,19 @@ class DialogRegistroFragment : DialogFragment() {
             val id: String
             val uid = Firebase.auth.currentUser?.uid.toString()
             if (type) {
-                val document = db.collection("registro").document(uid).collection("gastos").document()
-                id = document.id
-                category = gastospiner.selectedItem.toString()
-            } else {
-                val document = db.collection("registro").document(uid).collection("ingresos").document()
+                val document = db.collection("registro")
+                    .document(uid)
+                    .collection("ingresos")
+                    .document()
                 id = document.id
                 category = ingresospinner.selectedItem.toString()
+            } else {
+                val document = db.collection("registro")
+                    .document(uid)
+                    .collection("gastos")
+                    .document()
+                id = document.id
+                category = gastospiner.selectedItem.toString()
             }
 
             val fecha = inputdate.text.toString()
@@ -117,9 +123,17 @@ class DialogRegistroFragment : DialogFragment() {
                 type = type
             )
             if (type) {
-                db.collection("registro").document(uid).collection("gastos").document(id).set(registro)
+                db.collection("registro")
+                    .document(uid)
+                    .collection("ingresos")
+                    .document(id)
+                    .set(registro)
             } else {
-                db.collection("registro").document(uid).collection("ingresos").document(id).set(registro)
+                db.collection("registro")
+                    .document(uid)
+                    .collection("gastos")
+                    .document(id)
+                    .set(registro)
             }
             clearViews()
             Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
