@@ -1,5 +1,6 @@
 package com.example.myfinances.fragments.sub_fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentMensualBinding
 import com.example.myfinances.ui.RegistroAdapter
@@ -18,9 +20,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_mensual.*
 import java.text.SimpleDateFormat
 import java.util.*
-
-
-
 
 class MensualFragment : Fragment() {
 
@@ -36,7 +35,10 @@ class MensualFragment : Fragment() {
     ): View {
         _binding = FragmentMensualBinding.inflate(inflater, container, false)
 
-        val currentDate: String = SimpleDateFormat("MM", Locale.getDefault()).format(Date())
+        val currentDate: String = SimpleDateFormat(
+            "MM",
+            Locale.getDefault()
+        ).format(Date())
         loadFromServer(currentDate)
         binding.spinnerMonth.setSelection(currentDate.toInt())
 
@@ -58,13 +60,12 @@ class MensualFragment : Fragment() {
                 id: Long
             ) {
                 cargar()
-
             }
         }
 
-        binding.swiperefresh.setOnRefreshListener{
+        binding.swiperefresh.setOnRefreshListener {
             cargar()
-            binding.swiperefresh.isRefreshing =  false
+            binding.swiperefresh.isRefreshing = false
         }
 
         return binding.root
@@ -80,7 +81,7 @@ class MensualFragment : Fragment() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val registro: RegistroServer = document.toObject()
-                    if(registro.date?.contains("-$mes-") == true) {
+                    if (registro.date?.contains("-$mes-") == true) {
                         listRegistros.add(registro)
                     }
                 }
@@ -92,9 +93,9 @@ class MensualFragment : Fragment() {
     private fun cargar() {
         val pos = binding.spinnerMonth.selectedItemPosition
         if (pos != 0) {
-            val mes = if(pos<10){
+            val mes = if (pos < 10) {
                 "0$pos"
-            }else{
+            } else {
                 "$pos"
             }
             loadFromServer(mes)
@@ -103,12 +104,16 @@ class MensualFragment : Fragment() {
 
     private fun onRegistroItemClicked(registro: RegistroServer) {
         val fecha = registro.date
-        Toast.makeText(requireContext(), "Transacción realizada el día $fecha", Toast.LENGTH_SHORT).show()
+        val context: Context = binding.root.context
+        Toast.makeText(
+            requireContext(),
+            context.getString(R.string.transaccionOK, fecha),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

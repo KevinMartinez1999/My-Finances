@@ -39,7 +39,6 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
         notifyDataSetChanged()
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CardViewRegistroItemBinding.bind(view)
         val context: Context = binding.root.context
@@ -56,6 +55,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
                     value.setTextColor(Color.RED)
                 }
                 tipo.text = registro.description
+                descripcion.text = registro.date
+                descripcion2.text = registro.account
             }
         }
     }

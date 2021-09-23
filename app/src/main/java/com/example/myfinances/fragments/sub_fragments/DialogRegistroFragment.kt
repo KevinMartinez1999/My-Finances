@@ -141,7 +141,7 @@ class DialogRegistroFragment : DialogFragment() {
             gastospiner.visibility = View.GONE
             ingresospinner.visibility = View.VISIBLE
             categoryaccount.text = getString(R.string.account2)
-            categorydescription.text = getString(R.string.category2)
+            categorydescription.text = getString(R.string.descripcion)
             buttoningreso.isEnabled = false
             buttongasto.isEnabled = true
             valuetext.text = getString(R.string.valueIngresos)

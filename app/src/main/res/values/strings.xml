@@ -34,7 +34,8 @@
     <string name="registertype">Tipo de Registro</string>
     <string name="date">Fecha de Registro</string>
     <string name="category">Categoria</string>
-    <string name="category2">Descripción</string>
+    <string name="descripcion">Descripción</string>
+    <string name="monto">Monto</string>
     <string name="account">Metodo de pago</string>
     <string name="account2">Tipo de Cuenta</string>
     <string name="registerdialog">Registrar</string>
@@ -47,6 +48,8 @@
     <string name="selectday">Seleccionar día</string>
     <string name="positive">+ $ %s</string>
     <string name="negative">- $ %s</string>
+    <string name="transaccionOK">Transacción realizada el día %s</string>
+    <string name="tipo_registro">Tipo de registro</string>
 
     <string-array name="categorylist">
         <item>Alimentación</item>

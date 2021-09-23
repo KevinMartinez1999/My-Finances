@@ -33,7 +33,10 @@ class DiarioFragment : Fragment() {
     ): View {
         _binding = FragmentDiarioBinding.inflate(inflater, container, false)
 
-        val currentDate: String = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        val currentDate: String = SimpleDateFormat(
+            "dd-MM-yyyy",
+            Locale.getDefault()
+        ).format(Date())
         binding.textDate.setText(currentDate)
 
         registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
@@ -54,7 +57,7 @@ class DiarioFragment : Fragment() {
             loadFromServer(binding.textDate.text.toString())
         }
 
-        with(binding){
+        with(binding) {
 
             textDate.setOnClickListener {
                 DatePickerDialog(
@@ -72,10 +75,8 @@ class DiarioFragment : Fragment() {
             }
         }
 
-
         return binding.root
     }
-
 
     private fun loadFromServer(date: String) {
         val uid = Firebase.auth.currentUser?.uid.toString()
@@ -87,7 +88,7 @@ class DiarioFragment : Fragment() {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val registro: RegistroServer = document.toObject()
-                    if(registro.date == date){
+                    if (registro.date == date) {
                         listRegistros.add(registro)
                     }
                 }
@@ -95,8 +96,6 @@ class DiarioFragment : Fragment() {
                 listRegistros.clear()
             }
     }
-
-
 
     private fun onRegistroItemClicked(registro: RegistroServer) {
         val msg = "Dinero " + registro.account
@@ -106,7 +105,7 @@ class DiarioFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val fecha = binding.textDate.text.toString()
-        if(fecha.isNotEmpty()){
+        if (fecha.isNotEmpty()) {
             loadFromServer(fecha)
         }
     }
