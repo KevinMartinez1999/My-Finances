@@ -17,6 +17,7 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
 
     private var listRegistro: MutableList<RegistroServer> = mutableListOf()
     private var flagColor: Boolean = true
+    private var flagCard: Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -25,13 +26,17 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listRegistro[position], flagColor)
+        holder.bind(listRegistro[position], flagColor, flagCard)
         flagColor = !flagColor
         holder.itemView.setOnClickListener { onItemClicked(listRegistro[position]) }
     }
 
     override fun getItemCount(): Int {
         return listRegistro.size
+    }
+
+    fun selectFragment(ocultar: Boolean){
+        flagCard = ocultar
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -46,11 +51,11 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
         private val binding = CardViewRegistroItemBinding.bind(view)
         private val context: Context = binding.root.context
 
-        fun bind(registro: RegistroServer, flagColor: Boolean) {
+        fun bind(registro: RegistroServer, flagColor: Boolean, flagCard: Boolean) {
             with(binding) {
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
-
+                if (flagCard) descripcion.visibility = View.VISIBLE else descripcion.visibility = View.GONE
                 if (registro.type == true) {
                     value.setTextColor(Color.BLUE)
                     value.text = context.getString(R.string.positive, number)

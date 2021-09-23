@@ -33,18 +33,18 @@ class DiarioFragment : Fragment() {
     ): View {
         _binding = FragmentDiarioBinding.inflate(inflater, container, false)
 
-        val currentDate: String = SimpleDateFormat(
-            "dd-MM-yyyy",
-            Locale.getDefault()
-        ).format(Date())
-        binding.textDate.setText(currentDate)
-
         registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
         binding.RecyclerView.apply {
             layoutManager = LinearLayoutManager(this@DiarioFragment.context)
             adapter = registroAdapter
             setHasFixedSize(false)
         }
+
+        val currentDate: String = SimpleDateFormat(
+            "dd-MM-yyyy",
+            Locale.getDefault()
+        ).format(Date())
+        binding.textDate.setText(currentDate)
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
@@ -79,6 +79,7 @@ class DiarioFragment : Fragment() {
     }
 
     private fun loadFromServer(date: String) {
+        registroAdapter.selectFragment(false)
         val uid = Firebase.auth.currentUser?.uid.toString()
         val db = Firebase.firestore
         db.collection("registro")

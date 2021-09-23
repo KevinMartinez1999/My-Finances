@@ -35,19 +35,19 @@ class MensualFragment : Fragment() {
     ): View {
         _binding = FragmentMensualBinding.inflate(inflater, container, false)
 
-        val currentDate: String = SimpleDateFormat(
-            "MM",
-            Locale.getDefault()
-        ).format(Date())
-        loadFromServer(currentDate)
-        binding.spinnerMonth.setSelection(currentDate.toInt())
-
         registroAdaptermensual = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
         binding.RecyclerViewMonth.apply {
             layoutManager = LinearLayoutManager(this@MensualFragment.context)
             adapter = registroAdaptermensual
             setHasFixedSize(false)
         }
+
+        val currentDate: String = SimpleDateFormat(
+            "MM",
+            Locale.getDefault()
+        ).format(Date())
+        loadFromServer(currentDate)
+        binding.spinnerMonth.setSelection(currentDate.toInt())
 
         binding.spinnerMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -72,6 +72,7 @@ class MensualFragment : Fragment() {
     }
 
     private fun loadFromServer(mes: String) {
+        registroAdaptermensual.selectFragment(true)
         val uid = Firebase.auth.currentUser?.uid.toString()
         val db = Firebase.firestore
         db.collection("registro")
