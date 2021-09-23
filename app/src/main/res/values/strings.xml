@@ -44,6 +44,10 @@
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
     <string name="otro">Otro</string>
+    <string name="selectday">Seleccionar día</string>
+    <string name="positive">+ $ %s</string>
+    <string name="negative">- $ %s</string>
+
     <string-array name="categorylist">
         <item>Alimentación</item>
         <item>Vivienda</item>

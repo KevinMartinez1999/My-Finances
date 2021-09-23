@@ -1,17 +1,15 @@
 package com.example.myfinances.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.CardViewRegistroItemBinding
-import com.example.myfinances.utils.EMPTY
 import java.text.DecimalFormat
 
 class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
@@ -26,7 +24,6 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        eliminarduplicados(listRegistro)
         holder.bind(listRegistro[position])
         holder.itemView.setOnClickListener { onItemClicked(listRegistro[position]) }
     }
@@ -36,45 +33,29 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun appendItem(newItems: MutableList<RegistroServer>, boolean: Boolean) {
-        if (boolean) {
-            listRegistro.clear()
-        }
+    fun appendItem(newItems: MutableList<RegistroServer>) {
+        listRegistro.clear()
         listRegistro.addAll(newItems)
         notifyDataSetChanged()
     }
 
-    private fun eliminarduplicados(list: MutableList<RegistroServer>) {
-        for ((i, item) in list.withIndex()) {
-            for ((a, item2) in list.withIndex()) {
-                if ((item.date != "") and (item2.date != "")) {
-                    if ((item.date == item2.date) and (i != a)) {
-                        item2.date = ""
-                    }
-                }
-            }
-        }
-    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CardViewRegistroItemBinding.bind(view)
+        val context: Context = binding.root.context
         fun bind(registro: RegistroServer) {
             with(binding) {
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
 
-                if (registro.date != EMPTY) { fecha.visibility = VISIBLE }
-                else { fecha.visibility  = GONE }
-
                 if (registro.type == true) {
                     value.setTextColor(Color.BLUE)
-                    value.text = "+ $ $number"
+                    value.text = context.getString(R.string.positive, number)
                 } else {
-                    value.text = "- $ $number"
+                    value.text = context.getString(R.string.negative, number)
                     value.setTextColor(Color.RED)
                 }
                 tipo.text = registro.description
-                fecha.text = registro.date
             }
         }
     }

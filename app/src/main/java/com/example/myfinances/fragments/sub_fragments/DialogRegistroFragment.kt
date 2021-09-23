@@ -94,20 +94,16 @@ class DialogRegistroFragment : DialogFragment() {
             val category: String
             val id: String
             val uid = Firebase.auth.currentUser?.uid.toString()
-            if (type) {
-                val document = db.collection("registro")
+            val document = db.collection("registro")
                     .document(uid)
-                    .collection("ingresos")
+                    .collection("registropersonal")
                     .document()
-                id = document.id
-                category = ingresospinner.selectedItem.toString()
-            } else {
-                val document = db.collection("registro")
-                    .document(uid)
-                    .collection("gastos")
-                    .document()
-                id = document.id
-                category = gastospiner.selectedItem.toString()
+            id = document.id
+
+            category = if(type){
+                ingresospinner.selectedItem.toString()
+            }else{
+                gastospiner.selectedItem.toString()
             }
 
             val fecha = inputdate.text.toString()
@@ -122,19 +118,12 @@ class DialogRegistroFragment : DialogFragment() {
                 amount = monto,
                 type = type
             )
-            if (type) {
-                db.collection("registro")
-                    .document(uid)
-                    .collection("ingresos")
-                    .document(id)
-                    .set(registro)
-            } else {
-                db.collection("registro")
-                    .document(uid)
-                    .collection("gastos")
-                    .document(id)
-                    .set(registro)
-            }
+
+            db.collection("registro")
+                .document(uid)
+                .collection("registropersonal")
+                .document(id)
+                .set(registro)
             clearViews()
             Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
         }
