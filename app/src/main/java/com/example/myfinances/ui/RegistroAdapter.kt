@@ -16,6 +16,7 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     RecyclerView.Adapter<RegistroAdapter.ViewHolder>() {
 
     private var listRegistro: MutableList<RegistroServer> = mutableListOf()
+    private var flagColor: Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -24,7 +25,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listRegistro[position])
+        holder.bind(listRegistro[position], flagColor)
+        flagColor = !flagColor
         holder.itemView.setOnClickListener { onItemClicked(listRegistro[position]) }
     }
 
@@ -40,9 +42,11 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         private val binding = CardViewRegistroItemBinding.bind(view)
-        val context: Context = binding.root.context
-        fun bind(registro: RegistroServer) {
+        private val context: Context = binding.root.context
+
+        fun bind(registro: RegistroServer, flagColor: Boolean) {
             with(binding) {
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
@@ -57,6 +61,12 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
                 tipo.text = registro.description
                 descripcion.text = registro.date
                 descripcion2.text = registro.account
+                if (flagColor) {
+                    card.setCardBackgroundColor(Color.rgb(250, 250, 250))
+                }
+                else {
+                    card.setCardBackgroundColor(Color.WHITE)
+                }
             }
         }
     }

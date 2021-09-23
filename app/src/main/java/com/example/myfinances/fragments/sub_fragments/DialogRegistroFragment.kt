@@ -39,6 +39,12 @@ class DialogRegistroFragment : DialogFragment() {
         binding.buttoningreso.isEnabled = false
         binding.valuetext.text = getString(R.string.valueIngresos)
 
+        val currentDate: String = SimpleDateFormat(
+            "dd-MM-yyyy",
+            Locale.getDefault()
+        ).format(Date())
+        binding.inputdate.setText(currentDate)
+
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)

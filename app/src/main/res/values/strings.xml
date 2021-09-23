@@ -50,6 +50,12 @@
     <string name="negative">- $ %s</string>
     <string name="transaccionOK">Transacción realizada el día %s</string>
     <string name="tipo_registro">Tipo de registro</string>
+    <string name="dinero_cuenta">Cuentas</string>
+    <string name="dinero_efectivo">Efectivo</string>
+    <string name="deuda_tarjeta">Tarjetas de crédito</string>
+    <string name="balance">Balance</string>
+    <string name="a_deber">A deber</string>
+    <string name="capital">Capital</string>
 
     <string-array name="categorylist">
         <item>Alimentación</item>
