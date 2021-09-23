@@ -19,6 +19,9 @@ import kotlinx.android.synthetic.main.fragment_mensual.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
+
 class MensualFragment : Fragment() {
 
     private var _binding: FragmentMensualBinding? = null
@@ -54,16 +57,14 @@ class MensualFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val pos = binding.spinnerMonth.selectedItemPosition
-                if (pos != 0) {
-                    val mes = if(pos<10){
-                        "0$pos"
-                    }else{
-                        "$pos"
-                    }
-                    loadFromServer(mes)
-                }
+                cargar()
+
             }
+        }
+
+        binding.swiperefresh.setOnRefreshListener{
+            cargar()
+            binding.swiperefresh.isRefreshing =  false
         }
 
         return binding.root
@@ -88,6 +89,18 @@ class MensualFragment : Fragment() {
             }
     }
 
+    private fun cargar() {
+        val pos = binding.spinnerMonth.selectedItemPosition
+        if (pos != 0) {
+            val mes = if(pos<10){
+                "0$pos"
+            }else{
+                "$pos"
+            }
+            loadFromServer(mes)
+        }
+    }
+
     private fun onRegistroItemClicked(registro: RegistroServer) {
         val fecha = registro.date
         Toast.makeText(requireContext(), "Transacción realizada el día $fecha", Toast.LENGTH_SHORT).show()
@@ -97,4 +110,5 @@ class MensualFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
