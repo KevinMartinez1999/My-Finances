@@ -1,6 +1,8 @@
 package com.example.myfinances.fragments.sub_fragments
 
 import android.app.DatePickerDialog
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentDiarioBinding
 import com.example.myfinances.ui.RegistroAdapter
@@ -15,6 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -87,15 +91,35 @@ class DiarioFragment : Fragment() {
             .collection("registropersonal")
             .get()
             .addOnSuccessListener { result ->
+                var balance: Long = 0
                 for (document in result) {
                     val registro: RegistroServer = document.toObject()
                     if (registro.date == date) {
                         listRegistros.add(registro)
+                        if (registro.type == true) { balance += registro.amount!! }
+                        else { balance -= registro.amount!! }
                     }
                 }
+                setBalance(balance)
                 registroAdapter.appendItem(listRegistros)
                 listRegistros.clear()
             }
+    }
+
+    private fun setBalance(balance: Long) {
+        val context: Context = binding.root.context
+        val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
+        if (balance >= 0) {
+            val num = dec.format(balance)
+            binding.valueBalance.setTextColor(Color.BLUE)
+            binding.valueBalance.text =
+                context.getString(R.string.positive, num)
+        } else {
+            val num = dec.format(kotlin.math.abs(balance))
+            binding.valueBalance.setTextColor(Color.RED)
+            binding.valueBalance.text =
+                context.getString(R.string.negative, num)
+        }
     }
 
     private fun onRegistroItemClicked(registro: RegistroServer) {

@@ -9,7 +9,7 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
 
     <Spinner
         android:id="@+id/spinner_month"
-        android:layout_width="166dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -18,7 +18,28 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/balance"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/valueBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/balance"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balance" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/swiperefresh"
     android:layout_width="0dp"
     android:layout_height="0dp"
@@ -36,4 +57,5 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
         android:layout_height="wrap_content"
         tools:listitem="@layout/card_view_registro_item" />
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
