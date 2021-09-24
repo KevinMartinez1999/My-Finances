@@ -39,6 +39,12 @@ class DialogRegistroFragment : DialogFragment() {
         binding.buttoningreso.isEnabled = false
         binding.valuetext.text = getString(R.string.valueIngresos)
 
+        val currentDate: String = SimpleDateFormat(
+            "dd-MM-yyyy",
+            Locale.getDefault()
+        ).format(Date())
+        binding.inputdate.setText(currentDate)
+
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, month)
@@ -94,20 +100,16 @@ class DialogRegistroFragment : DialogFragment() {
             val category: String
             val id: String
             val uid = Firebase.auth.currentUser?.uid.toString()
-            if (type) {
-                val document = db.collection("registro")
+            val document = db.collection("registro")
                     .document(uid)
-                    .collection("ingresos")
+                    .collection("registropersonal")
                     .document()
-                id = document.id
-                category = ingresospinner.selectedItem.toString()
-            } else {
-                val document = db.collection("registro")
-                    .document(uid)
-                    .collection("gastos")
-                    .document()
-                id = document.id
-                category = gastospiner.selectedItem.toString()
+            id = document.id
+
+            category = if(type){
+                ingresospinner.selectedItem.toString()
+            }else{
+                gastospiner.selectedItem.toString()
             }
 
             val fecha = inputdate.text.toString()
@@ -122,19 +124,12 @@ class DialogRegistroFragment : DialogFragment() {
                 amount = monto,
                 type = type
             )
-            if (type) {
-                db.collection("registro")
-                    .document(uid)
-                    .collection("ingresos")
-                    .document(id)
-                    .set(registro)
-            } else {
-                db.collection("registro")
-                    .document(uid)
-                    .collection("gastos")
-                    .document(id)
-                    .set(registro)
-            }
+
+            db.collection("registro")
+                .document(uid)
+                .collection("registropersonal")
+                .document(id)
+                .set(registro)
             clearViews()
             Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
         }
@@ -152,7 +147,7 @@ class DialogRegistroFragment : DialogFragment() {
             gastospiner.visibility = View.GONE
             ingresospinner.visibility = View.VISIBLE
             categoryaccount.text = getString(R.string.account2)
-            categorydescription.text = getString(R.string.category2)
+            categorydescription.text = getString(R.string.descripcion)
             buttoningreso.isEnabled = false
             buttongasto.isEnabled = true
             valuetext.text = getString(R.string.valueIngresos)
