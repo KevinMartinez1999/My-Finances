@@ -74,6 +74,7 @@ class DiarioFragment : Fragment() {
             }
 
             swiperefresh.setOnRefreshListener {
+                registroAdapter.flagColor = true
                 loadFromServer(binding.textDate.text.toString())
                 binding.swiperefresh.isRefreshing = false
             }

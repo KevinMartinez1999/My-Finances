@@ -16,8 +16,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     RecyclerView.Adapter<RegistroAdapter.ViewHolder>() {
 
     private var listRegistro: MutableList<RegistroServer> = mutableListOf()
-    private var flagColor: Boolean = true
     private var flagCard: Boolean = true
+    var flagColor: Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

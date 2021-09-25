@@ -48,6 +48,7 @@
     <string name="selectday">Seleccionar día</string>
     <string name="positive">+ $ %s</string>
     <string name="negative">- $ %s</string>
+    <string name="neutro">$ %s</string>
     <string name="transaccionOK">Transacción realizada el día %s</string>
     <string name="tipo_registro">Tipo de registro</string>
     <string name="dinero_cuenta">Cuentas</string>

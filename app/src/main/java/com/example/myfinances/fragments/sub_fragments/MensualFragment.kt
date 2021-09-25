@@ -67,6 +67,7 @@ class MensualFragment : Fragment() {
         }
 
         binding.swiperefresh.setOnRefreshListener {
+            registroAdaptermensual.flagColor = true
             cargar()
             binding.swiperefresh.isRefreshing = false
         }
