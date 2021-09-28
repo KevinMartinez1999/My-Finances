@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfinances.R
@@ -37,7 +36,7 @@ class DiarioFragment : Fragment() {
     ): View {
         _binding = FragmentDiarioBinding.inflate(inflater, container, false)
 
-        registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
+        registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked() })
         binding.RecyclerView.apply {
             layoutManager = LinearLayoutManager(this@DiarioFragment.context)
             adapter = registroAdapter
@@ -97,8 +96,11 @@ class DiarioFragment : Fragment() {
                     val registro: RegistroServer = document.toObject()
                     if (registro.date == date) {
                         listRegistros.add(registro)
-                        if (registro.type == true) { balance += registro.amount!! }
-                        else { balance -= registro.amount!! }
+                        if (registro.type == true) {
+                            balance += registro.amount!!
+                        } else {
+                            balance -= registro.amount!!
+                        }
                     }
                 }
                 setBalance(balance)
@@ -123,9 +125,8 @@ class DiarioFragment : Fragment() {
         }
     }
 
-    private fun onRegistroItemClicked(registro: RegistroServer) {
-        val msg = "Dinero " + registro.account
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    private fun onRegistroItemClicked() {
+
     }
 
     override fun onResume() {

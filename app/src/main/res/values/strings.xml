@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Finances</string>
+    <string name="app_name">Mis finanzas</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="forgot_password">¿Has olvidado tu contraseña?</string>
@@ -15,8 +15,10 @@
     <string name="no_coincidencia">Las contraseñas no coinciden</string>
     <string name="mostrar">Mostrar contraseña</string>
     <string name="logout">Cerrar sesión</string>
-    <string name="transferencias">Trans.</string>
-    <string name="estadisticas">Estad.</string>
+    <string name="trans">Trans.</string>
+    <string name="transacciones">Transacciones</string>
+    <string name="estad">Estad.</string>
+    <string name="estadisticas">Estadísticas</string>
     <string name="bienes">Bienes</string>
     <string name="ajustes">Ajustes</string>
     <string name="diario">Diario</string>

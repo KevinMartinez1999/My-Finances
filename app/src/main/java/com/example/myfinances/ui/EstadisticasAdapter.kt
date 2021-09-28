@@ -7,12 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.androidplot.pie.Segment
-import com.androidplot.pie.SegmentFormatter
 import com.example.myfinances.R
 import com.example.myfinances.data.EstadisticasItem
 import com.example.myfinances.databinding.CardViewEstadisticasItemBinding
-import com.example.myfinances.databinding.FragmentIngresosBinding
 import java.text.DecimalFormat
 
 class EstadisticasAdapter(private val onItemClicked: (EstadisticasItem) -> Unit) :
@@ -54,11 +51,15 @@ class EstadisticasAdapter(private val onItemClicked: (EstadisticasItem) -> Unit)
             val numero = dec.format(registro.amount)
 
             binding.tipo.text = registro.tipo
-            binding.value.setTextColor(Color.BLACK)
+            if (registro.ingreso == true) {
+                binding.value.setTextColor(Color.BLUE)
+            } else {
+                binding.value.setTextColor(Color.RED)
+            }
             binding.value.text = context.getString(R.string.neutro, numero)
 
             if (flagColor) {
-                binding.card.setCardBackgroundColor(Color.rgb(250, 250, 250))
+                binding.card.setCardBackgroundColor(Color.rgb(245, 245, 245))
             } else {
                 binding.card.setCardBackgroundColor(Color.WHITE)
             }
