@@ -24,6 +24,5 @@
         android:id="@+id/RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         tools:listitem="@layout/card_view_estadisticas_item" />
 </LinearLayout>

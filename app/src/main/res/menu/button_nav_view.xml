@@ -5,12 +5,12 @@
         android:id="@+id/navigation_registro"
         android:enabled="true"
         android:icon="@drawable/ic_registro"
-        android:title="@string/transferencias"/>
+        android:title="@string/trans"/>
     <item
         android:id="@+id/navigation_estadisticas"
         android:enabled="true"
         android:icon="@drawable/ic_estadisticas"
-        android:title="@string/estadisticas"/>
+        android:title="@string/estad"/>
     <item
         android:id="@+id/navigation_bienes"
         android:enabled="true"

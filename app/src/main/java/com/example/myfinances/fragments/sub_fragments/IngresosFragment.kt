@@ -33,7 +33,7 @@ class IngresosFragment : Fragment() {
     ): View {
         _binding = FragmentIngresosBinding.inflate(inflater, container, false)
 
-        estadisticasAdapter = EstadisticasAdapter(onItemClicked = { onRegistroItemClicked(it) })
+        estadisticasAdapter = EstadisticasAdapter(onItemClicked = { onRegistroItemClicked() })
         binding.RecyclerView.apply {
             layoutManager = LinearLayoutManager(this@IngresosFragment.context)
             adapter = estadisticasAdapter
@@ -54,7 +54,7 @@ class IngresosFragment : Fragment() {
                 val listEstadisticas: MutableList<EstadisticasItem> = arrayListOf()
                 val lista = resources.getStringArray(R.array.ingresoslist)
                 for (i in lista) {
-                    listEstadisticas.add(EstadisticasItem(i, 0))
+                    listEstadisticas.add(EstadisticasItem(i, 0, true))
                 }
                 for (document in result) {
                     val registro: RegistroServer = document.toObject()
@@ -90,7 +90,7 @@ class IngresosFragment : Fragment() {
         }
     }
 
-    private fun onRegistroItemClicked(it: EstadisticasItem) {
+    private fun onRegistroItemClicked() {
 
     }
 

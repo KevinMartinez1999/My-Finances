@@ -24,19 +24,17 @@
                 android:id="@+id/balance"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#FAFAFA"
+                android:background="#F5F5F5"
                 android:gravity="center"
                 android:text="@string/balance"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valueBalance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/balance"
-                android:textSize="16sp" />
+                android:text="@string/balance" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,19 +47,17 @@
                 android:id="@+id/a_deber"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#FAFAFA"
+                android:background="#F5F5F5"
                 android:gravity="center"
                 android:text="@string/a_deber"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valueDeber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/a_deber"
-                android:textSize="16sp" />
+                android:text="@string/a_deber" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,19 +70,17 @@
                 android:id="@+id/capital"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="#FAFAFA"
+                android:background="#F5F5F5"
                 android:gravity="center"
                 android:text="@string/capital"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valueCapital"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/capital"
-                android:textSize="16sp" />
+                android:text="@string/capital" />
         </LinearLayout>
 
     </LinearLayout>
@@ -94,15 +88,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        app:cardBackgroundColor="#FAFAFA">
+        android:layout_marginTop="48dp"
+        app:cardBackgroundColor="#F5F5F5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/dineroEfectivo"
@@ -111,8 +104,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:text="@string/dinero_efectivo"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valorEfectivo"
@@ -121,8 +113,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@string/dinero_efectivo"
-                android:textSize="18sp" />
+                android:text="@string/dinero_efectivo" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -134,8 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/dineroCuenta"
@@ -144,8 +134,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:text="@string/dinero_cuenta"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valorCuenta"
@@ -154,22 +143,20 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@string/dinero_cuenta"
-                android:textSize="18sp" />
+                android:text="@string/dinero_cuenta" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:cardBackgroundColor="#FAFAFA">
+        app:cardBackgroundColor="#F5F5F5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/dineroTarjeta"
@@ -178,8 +165,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:text="@string/deuda_tarjeta"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/valorTarjeta"
@@ -188,8 +174,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:gravity="end"
-                android:text="@string/deuda_tarjeta"
-                android:textSize="18sp" />
+                android:text="@string/deuda_tarjeta" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

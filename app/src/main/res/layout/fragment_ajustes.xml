@@ -30,16 +30,16 @@
 
     <ImageButton
         android:id="@+id/addPhotoButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-48dp"
         android:background="#00FFFFFF"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_add_photo"
-        app:layout_constraintBottom_toTopOf="@+id/profileUsername"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profileImageView"
-        app:layout_constraintVertical_bias="0.0"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

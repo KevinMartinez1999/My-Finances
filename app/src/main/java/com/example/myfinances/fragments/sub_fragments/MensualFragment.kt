@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfinances.R
@@ -22,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_mensual.*
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.lang.Math.abs as abs
 
 class MensualFragment : Fragment() {
 
@@ -38,7 +36,7 @@ class MensualFragment : Fragment() {
     ): View {
         _binding = FragmentMensualBinding.inflate(inflater, container, false)
 
-        registroAdaptermensual = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
+        registroAdaptermensual = RegistroAdapter(onItemClicked = { onRegistroItemClicked() })
         binding.RecyclerViewMonth.apply {
             layoutManager = LinearLayoutManager(this@MensualFragment.context)
             adapter = registroAdaptermensual
@@ -89,8 +87,11 @@ class MensualFragment : Fragment() {
                     val registro: RegistroServer = document.toObject()
                     if (registro.date?.contains("-$mes-") == true) {
                         listRegistros.add(registro)
-                        if (registro.type == true) { balance += registro.amount!! }
-                        else { balance -= registro.amount!! }
+                        if (registro.type == true) {
+                            balance += registro.amount!!
+                        } else {
+                            balance -= registro.amount!!
+                        }
                     }
                 }
                 setBalance(balance)
@@ -127,14 +128,8 @@ class MensualFragment : Fragment() {
         }
     }
 
-    private fun onRegistroItemClicked(registro: RegistroServer) {
-        val fecha = registro.date
-        val context: Context = binding.root.context
-        Toast.makeText(
-            requireContext(),
-            context.getString(R.string.transaccionOK, fecha),
-            Toast.LENGTH_SHORT
-        ).show()
+    private fun onRegistroItemClicked() {
+
     }
 
     override fun onDestroyView() {
