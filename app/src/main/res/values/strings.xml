@@ -59,6 +59,8 @@
     <string name="balance">Balance</string>
     <string name="a_deber">A deber</string>
     <string name="capital">Capital</string>
+    <string name="ingresos_mensual">Ingresos de este mes</string>
+    <string name="gastos_mensual">Gastos de este mes</string>
 
     <string-array name="categorylist">
         <item>Alimentación</item>

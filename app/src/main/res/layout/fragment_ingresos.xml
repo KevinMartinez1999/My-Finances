@@ -6,15 +6,23 @@
     android:orientation="vertical"
     tools:context=".fragments.sub_fragments.IngresosFragment">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/ingresos_mensual"
+        android:textColor="@color/black" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="8dp">
 
-        <com.androidplot.pie.PieChart
-            android:id="@+id/PieChart"
-            style="@style/APDefacto.Light"
+        <lecho.lib.hellocharts.view.PieChartView
+            android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

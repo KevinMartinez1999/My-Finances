@@ -11,10 +11,15 @@ import com.example.myfinances.data.EstadisticasItem
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentGastosBinding
 import com.example.myfinances.ui.EstadisticasAdapter
+import com.example.myfinances.utils.colors
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import lecho.lib.hellocharts.model.PieChartData
+import lecho.lib.hellocharts.model.SliceValue
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GastosFragment : Fragment() {
 
@@ -35,7 +40,13 @@ class GastosFragment : Fragment() {
             adapter = estadisticasAdapter
             setHasFixedSize(false)
         }
-        loadFromServer("09")
+
+        val currentDate: String = SimpleDateFormat(
+            "MM",
+            Locale.getDefault()
+        ).format(Date())
+
+        loadFromServer(currentDate)
 
         return binding.root
     }
@@ -71,7 +82,18 @@ class GastosFragment : Fragment() {
                 }
                 listEstadisticas.removeAll(aux)
                 estadisticasAdapter.appendItem(listEstadisticas)
+                drawPiechart(listEstadisticas)
             }
+    }
+
+    private fun drawPiechart(items: MutableList<EstadisticasItem>) {
+        val pieData: MutableList<SliceValue> = arrayListOf()
+        for ((i, item) in items.withIndex()) {
+            pieData.add(SliceValue(item.amount!!.toFloat(), colors[i]).setLabel(item.tipo))
+        }
+        val pieChartData = PieChartData(pieData)
+        pieChartData.setHasLabels(true)
+        binding.chart.pieChartData = pieChartData
     }
 
     private fun onRegistroItemClicked() {
