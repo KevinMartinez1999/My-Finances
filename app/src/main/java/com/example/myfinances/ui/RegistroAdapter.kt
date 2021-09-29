@@ -16,8 +16,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
     RecyclerView.Adapter<RegistroAdapter.ViewHolder>() {
 
     private var listRegistro: MutableList<RegistroServer> = mutableListOf()
-    private var flagColor: Boolean = true
     private var flagCard: Boolean = true
+    var flagColor: Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -35,7 +35,7 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
         return listRegistro.size
     }
 
-    fun selectFragment(ocultar: Boolean){
+    fun selectFragment(ocultar: Boolean) {
         flagCard = ocultar
     }
 
@@ -55,7 +55,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
             with(binding) {
                 val dec = DecimalFormat("###,###,###,###,###,###,###,###.##")
                 val number = dec.format(registro.amount)
-                if (flagCard) descripcion.visibility = View.VISIBLE else descripcion.visibility = View.GONE
+                if (flagCard) descripcion.visibility = View.VISIBLE else descripcion.visibility =
+                    View.GONE
                 if (registro.type == true) {
                     value.setTextColor(Color.BLUE)
                     value.text = context.getString(R.string.positive, number)
@@ -67,9 +68,8 @@ class RegistroAdapter(private val onItemClicked: (RegistroServer) -> Unit) :
                 descripcion.text = registro.date
                 descripcion2.text = registro.account
                 if (flagColor) {
-                    card.setCardBackgroundColor(Color.rgb(250, 250, 250))
-                }
-                else {
+                    card.setCardBackgroundColor(Color.rgb(245, 245, 245))
+                } else {
                     card.setCardBackgroundColor(Color.WHITE)
                 }
             }

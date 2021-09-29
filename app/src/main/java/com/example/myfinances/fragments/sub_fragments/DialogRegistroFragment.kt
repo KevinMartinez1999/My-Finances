@@ -97,18 +97,17 @@ class DialogRegistroFragment : DialogFragment() {
     private fun registrarEnServer(type: Boolean) {
         with(binding) {
             val db = Firebase.firestore
-            val category: String
             val id: String
             val uid = Firebase.auth.currentUser?.uid.toString()
             val document = db.collection("registro")
-                    .document(uid)
-                    .collection("registropersonal")
-                    .document()
+                .document(uid)
+                .collection("registropersonal")
+                .document()
             id = document.id
 
-            category = if(type){
+            val category: String = if (type) {
                 ingresospinner.selectedItem.toString()
-            }else{
+            } else {
                 gastospiner.selectedItem.toString()
             }
 

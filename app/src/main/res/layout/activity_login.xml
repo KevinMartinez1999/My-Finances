@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="16dp"
         android:orientation="vertical"
-        android:padding="32dp"
         tools:context=".activities.LoginActivity">
 
         <ImageView
@@ -27,6 +27,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -42,6 +46,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,8 +71,8 @@
             android:id="@+id/forgot_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:gravity="end"
-            android:padding="8dp"
             android:text="@string/forgot_password" />
 
         <Button
@@ -73,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/iniciar_sesion"
-            app:cornerRadius="32dp" />
+            app:cornerRadius="16dp" />
 
         <Button
             android:id="@+id/register"
@@ -82,6 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/registrate"
-            app:cornerRadius="32dp" />
+            app:cornerRadius="16dp" />
     </LinearLayout>
 </ScrollView>
