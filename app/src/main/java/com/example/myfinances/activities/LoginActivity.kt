@@ -1,6 +1,7 @@
 package com.example.myfinances.activities
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -15,6 +16,7 @@ import com.example.myfinances.utils.passValidator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -112,7 +114,9 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
+        forgot_password.setOnClickListener {
+            goToRecoveryActivity()
+        }
     }
 
     private fun clearViews() {
@@ -131,6 +135,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun goToRecoveryActivity() {
+        val intent = Intent(this, RecoveryActivity::class.java)
+        startActivity(intent)
     }
 
     private fun toastMessage(message: String) {

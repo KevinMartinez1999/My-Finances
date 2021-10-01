@@ -61,6 +61,9 @@
     <string name="capital">Capital</string>
     <string name="ingresos_mensual">Ingresos de este mes</string>
     <string name="gastos_mensual">Gastos de este mes</string>
+    <string name="recovery_password">Recuperar contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="information">Ingresando su correo electrónico le enviaremos un email de recuperación donde podrá cambiar su contraseña.</string>
 
     <string-array name="categorylist">
         <item>Alimentación</item>
