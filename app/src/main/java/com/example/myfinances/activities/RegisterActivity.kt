@@ -131,7 +131,8 @@ class RegisterActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     uid = user?.uid.toString()
                     crearUserServer(uid, name, email, sexo, defaultPicture)
-                    toastMessage("Usuario creado")
+                    user?.sendEmailVerification()
+                    toastMessage("Usuario creado - Se envió Correo de Verificación")
                 } else {
                     if (task.exception?.localizedMessage == "The email address is badly formatted.") {
                         toastMessage(getString(R.string.email_incorrecto))

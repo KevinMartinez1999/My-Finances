@@ -79,8 +79,14 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                //val user = auth.currentUser
-                                goToMainActivity()
+                                val user =  auth.currentUser
+                                if (user != null) {
+                                    if(user.isEmailVerified){
+                                        goToMainActivity()
+                                    }else{
+                                        toastMessage("Correo electrónico no verificado")
+                                    }
+                                }
                             } else {
                                 when (task.exception?.localizedMessage) {
                                     "The email address is badly formatted." -> {
@@ -105,6 +111,8 @@ class LoginActivity : AppCompatActivity() {
                 goToRegisterActivity()
             }
         }
+
+
     }
 
     private fun clearViews() {
