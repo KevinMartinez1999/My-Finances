@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentDiarioBinding
+import com.example.myfinances.fragments.RegistroFragmentDirections
 import com.example.myfinances.ui.RegistroAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -29,6 +31,7 @@ class DiarioFragment : Fragment() {
     private var cal = Calendar.getInstance()
     private var listRegistros: MutableList<RegistroServer> = arrayListOf()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +39,7 @@ class DiarioFragment : Fragment() {
     ): View {
         _binding = FragmentDiarioBinding.inflate(inflater, container, false)
 
-        registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked() })
+        registroAdapter = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
         binding.RecyclerView.apply {
             layoutManager = LinearLayoutManager(this@DiarioFragment.context)
             adapter = registroAdapter
@@ -125,8 +128,12 @@ class DiarioFragment : Fragment() {
         }
     }
 
-    private fun onRegistroItemClicked() {
-
+    private fun onRegistroItemClicked(registro: RegistroServer) {
+        findNavController().navigate(
+            RegistroFragmentDirections.actionNavigationRegistroToNavigationEditRegistro(
+                register = registro
+            )
+        )
     }
 
     override fun onResume() {

@@ -64,6 +64,10 @@
     <string name="recovery_password">Recuperar contraseña</string>
     <string name="enviar">Enviar</string>
     <string name="information">Ingresando su correo electrónico le enviaremos un email de recuperación donde podrá cambiar su contraseña.</string>
+    <string name="delete">Borrar Registro</string>
+    <string name="edit">Actualizar</string>
+    <string name="register">Registro</string>
+    <string name="movimiento">Registrar Movimiento</string>
 
     <string-array name="categorylist">
         <item>Alimentación</item>

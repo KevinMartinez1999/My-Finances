@@ -113,7 +113,6 @@ class RegisterActivity : AppCompatActivity() {
             picture = defaultPicture
         )
         db.collection("users").document(id).set(userServer)
-        gotoLoginActivity()
     }
 
     private fun crearUsuario(
@@ -133,6 +132,7 @@ class RegisterActivity : AppCompatActivity() {
                     crearUserServer(uid, name, email, sexo, defaultPicture)
                     user?.sendEmailVerification()
                     toastMessage("Usuario creado - Se envió Correo de Verificación")
+                    gotoLoginActivity()
                 } else {
                     if (task.exception?.localizedMessage == "The email address is badly formatted.") {
                         toastMessage(getString(R.string.email_incorrecto))
