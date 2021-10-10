@@ -1,11 +1,11 @@
 package com.example.myfinances.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myfinances.R
 import com.example.myfinances.databinding.ActivityRecoveryBinding
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -25,16 +25,23 @@ class RecoveryActivity : AppCompatActivity() {
             auth = Firebase.auth
             if (email.isNotEmpty()) {
                 auth.sendPasswordResetEmail(email)
-                    .addOnCompleteListener{ task ->
-                        if(task.isSuccessful){
-                            toastMessage("Correo de recuperación enviado con éxito")
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            toastMessage(getString(R.string.correo_recuperacion))
                             gotoLoginActivity()
                         } else {
-                            toastMessage("No fue posible enviar el correo de recuperación, verifique el correo.")
+                            when (task.exception?.localizedMessage) {
+                                "The email address is badly formatted." -> {
+                                    toastMessage(getString(R.string.email_invalido))
+                                }
+                                "There is no user record corresponding to this identifier. The user may have been deleted." -> {
+                                    toastMessage(getString(R.string.verifique_correo_de_recuperacion))
+                                }
+                            }
                         }
                     }
             } else {
-                toastMessage("Ingrese un correo electrónico")
+                toastMessage(getString(R.string.ingrese_correo))
             }
         }
     }
@@ -49,7 +56,7 @@ class RecoveryActivity : AppCompatActivity() {
         Toast.makeText(
             this,
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         ).show()
     }
 }

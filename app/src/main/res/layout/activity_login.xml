@@ -75,6 +75,7 @@
             android:focusable="auto"
             android:focusableInTouchMode="true"
             android:gravity="end"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="@string/forgot_password"
             android:textSize="16sp" />
 

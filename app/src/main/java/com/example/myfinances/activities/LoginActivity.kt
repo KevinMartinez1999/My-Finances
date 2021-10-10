@@ -1,7 +1,6 @@
 package com.example.myfinances.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -81,12 +80,12 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                val user =  auth.currentUser
+                                val user = auth.currentUser
                                 if (user != null) {
-                                    if(user.isEmailVerified){
+                                    if (user.isEmailVerified) {
                                         goToMainActivity()
-                                    }else{
-                                        toastMessage("Correo electrónico no verificado")
+                                    } else {
+                                        toastMessage(getString(R.string.correo_no_verificado))
                                     }
                                 }
                             } else {
@@ -146,7 +145,7 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(
             this,
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         ).show()
     }
 }

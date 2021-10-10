@@ -19,6 +19,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.card_view_registro_item.*
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -130,7 +131,7 @@ class DiarioFragment : Fragment() {
 
     private fun onRegistroItemClicked(registro: RegistroServer) {
         findNavController().navigate(
-            RegistroFragmentDirections.actionNavigationRegistroToNavigationEditRegistro(
+            RegistroFragmentDirections.actionNavigationRegistroToEditarRegistroFragment(
                 register = registro
             )
         )

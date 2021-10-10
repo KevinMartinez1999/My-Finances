@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.example.myfinances.R
 import com.example.myfinances.data.server.UserServer
 import com.example.myfinances.databinding.FragmentAjustesBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -69,7 +70,7 @@ class AjustesFragment : Fragment() {
                 db.collection("users").document(id).update(documentUpdate).addOnSuccessListener {
                     Toast.makeText(
                         requireContext(),
-                        "Fotografía actualizada con éxito",
+                        getString(R.string.foto_actualizada),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
