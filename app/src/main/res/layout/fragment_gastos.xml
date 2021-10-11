@@ -6,14 +6,37 @@
     android:orientation="vertical"
     tools:context=".fragments.sub_fragments.IngresosFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/gastos_mensual"
-        android:textColor="@color/black" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moth_and_year"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:id="@+id/mes"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:entries="@array/months"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:id="@+id/ano"
+            style="@android:style/Widget.Holo.Light.Spinner"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:entries="@array/years"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfinances.R
@@ -41,17 +42,65 @@ class GastosFragment : Fragment() {
             setHasFixedSize(false)
         }
 
-        val currentDate: String = SimpleDateFormat(
+        val mes: String = SimpleDateFormat(
             "MM",
             Locale.getDefault()
         ).format(Date())
 
-        loadFromServer(currentDate)
+        val year: String = SimpleDateFormat(
+            "yyyy",
+            Locale.getDefault()
+        ).format(Date())
+
+        binding.mes.setSelection(mes.toInt())
+        binding.ano.setSelection(year.toInt() - 2000)
+
+        loadFromServer(mes, year)
+
+        binding.mes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val pos = binding.mes.selectedItemPosition
+                val y = binding.ano.selectedItem.toString()
+
+                val m = if (pos < 10) {
+                    "0$pos"
+                } else {
+                    "$pos"
+                }
+
+                estadisticasAdapter.flagColor = true
+                loadFromServer(m, y)
+            }
+        }
+
+        binding.ano.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val pos = binding.mes.selectedItemPosition
+                val y = binding.ano.selectedItem.toString()
+
+                val m = if (pos < 10) {
+                    "0$pos"
+                } else {
+                    "$pos"
+                }
+
+                estadisticasAdapter.flagColor = true
+                loadFromServer(m, y)
+            }
+        }
 
         return binding.root
     }
 
-    private fun loadFromServer(mes: String) {
+    private fun loadFromServer(mes: String, year: String) {
         val uid = Firebase.auth.currentUser?.uid.toString()
         val db = Firebase.firestore
         db.collection("registro")
@@ -66,7 +115,7 @@ class GastosFragment : Fragment() {
                 }
                 for (document in result) {
                     val registro: RegistroServer = document.toObject()
-                    if (registro.date?.contains("-$mes-") == true && registro.type == false) {
+                    if (registro.date?.contains("-$mes-$year") == true && registro.type == false) {
                         for (item in listEstadisticas) {
                             if (item.tipo == registro.description) {
                                 item.amount = item.amount?.plus(registro.amount!!)

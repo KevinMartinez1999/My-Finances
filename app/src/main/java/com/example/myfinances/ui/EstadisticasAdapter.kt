@@ -16,7 +16,7 @@ class EstadisticasAdapter(private val onItemClicked: (EstadisticasItem) -> Unit)
     RecyclerView.Adapter<EstadisticasAdapter.ViewHolder>() {
 
     private val listEstadisticas: MutableList<EstadisticasItem> = arrayListOf()
-    private var flagColor: Boolean = true
+    var flagColor: Boolean = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

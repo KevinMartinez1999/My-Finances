@@ -10,10 +10,10 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
     <Spinner
         android:id="@+id/spinner_month"
         style="@android:style/Widget.Holo.Light.Spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="26dp"
         android:entries="@array/months"
         android:minHeight="48dp"
         android:spinnerMode="dialog"
@@ -28,6 +28,7 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
         android:text="@string/balance"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/spinner_month"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +38,7 @@ tools:context=".fragments.sub_fragments.DiarioFragment">
         android:layout_height="wrap_content"
         android:text="@string/balance"
         app:layout_constraintEnd_toStartOf="@+id/spinner_month"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/balance" />
 
