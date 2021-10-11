@@ -2,7 +2,7 @@
     <string name="app_name">Mis finanzas</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
-    <string name="forgot_password">¿Has olvidado tu contraseña?</string>
+    <string name="forgot_password"><u>¿Has olvidado tu contraseña?</u></string>
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="registrate">Regístrate</string>
     <string name="errorpass">Contraseña incorrecta</string>
@@ -33,11 +33,11 @@
     <string name="usuario_no_existe">El usuario no existe. Por favor regístrate</string>
     <string name="pass_incorrecta">Contraseña incorrecta. Intente de nuevo</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="registertype">Tipo de Registro</string>
+    <string name="registertype">Hacer un registro</string>
     <string name="date">Fecha de Registro</string>
     <string name="category">Categoria</string>
-    <string name="descripcion">Descripción</string>
-    <string name="monto">Monto</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="monto">Monto:</string>
     <string name="account">Metodo de pago</string>
     <string name="account2">Tipo de Cuenta</string>
     <string name="registerdialog">Registrar</string>
@@ -61,7 +61,40 @@
     <string name="capital">Capital</string>
     <string name="ingresos_mensual">Ingresos de este mes</string>
     <string name="gastos_mensual">Gastos de este mes</string>
+    <string name="recovery_password">Recuperar contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="information">Ingresando su correo electrónico le enviaremos un email de recuperación donde podrá cambiar su contraseña.</string>
+    <string name="delete">Borrar Registro</string>
+    <string name="edit">Actualizar</string>
+    <string name="register">Registro</string>
+    <string name="movimiento">Registrar Movimiento</string>
+    <string name="correo_no_verificado">Correo electrónico no verificado. Revise su bandeja de entrada</string>
+    <string name="usuario_creado_verificar">Usuario creado - Se envió Correo de Verificación</string>
+    <string name="correo_recuperacion">Correo de recuperación enviado con éxito</string>
+    <string name="ingrese_correo">Ingrese un correo electrónico</string>
+    <string name="verifique_correo_de_recuperacion">No fue posible enviar el correo de recuperación. El correo no está asociado a ninguna cuenta.</string>
+    <string name="foto_actualizada">Fotografía actualizada con éxito</string>
+    <string name="fecha">Fecha:</string>
+    <string name="tipo_de_registro">Tipo de registro:</string>
+    <string name="tipo_pago">Tipo de pago:</string>
+    <string name="ingrese_el_monto">Ingrese el monto</string>
+    <string name="registereditar">Editar Registro</string>
+    <string name="editar_registro">Editar/Borrar Registro</string>
+    <string name="confirmacion">Confirmación</string>
+    <string name="confirmar_borrar">¿Está seguro que desea BORRAR este registro?</string>
+    <string name="confirmar_editar">¿Está seguro que desea EDITAR este registro?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="registro_actualizado">Registro Actualizado con Exito</string>
+    <string name="ingresar_nuevo_monto">Ingrese el nuevo monto del registro</string>
+    <string name="registro_eliminado">Registro eliminado con éxito</string>
+    <string name="registro_invalido">Registro Inválido</string>
+    <string name="registro_exitoso">Registro Exitoso</string>
 
+    <string-array name="tipoList">
+        <item>Ingreso</item>
+        <item>Gasto</item>
+    </string-array>
     <string-array name="categorylist">
         <item>Alimentación</item>
         <item>Vivienda</item>

@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
 import com.example.myfinances.databinding.FragmentMensualBinding
+import com.example.myfinances.fragments.RegistroFragmentDirections
 import com.example.myfinances.ui.RegistroAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -36,7 +38,7 @@ class MensualFragment : Fragment() {
     ): View {
         _binding = FragmentMensualBinding.inflate(inflater, container, false)
 
-        registroAdaptermensual = RegistroAdapter(onItemClicked = { onRegistroItemClicked() })
+        registroAdaptermensual = RegistroAdapter(onItemClicked = { onRegistroItemClicked(it) })
         binding.RecyclerViewMonth.apply {
             layoutManager = LinearLayoutManager(this@MensualFragment.context)
             adapter = registroAdaptermensual
@@ -128,8 +130,12 @@ class MensualFragment : Fragment() {
         }
     }
 
-    private fun onRegistroItemClicked() {
-
+    private fun onRegistroItemClicked(registro: RegistroServer) {
+        findNavController().navigate(
+            RegistroFragmentDirections.actionNavigationRegistroToEditarRegistroFragment(
+                register = registro
+            )
+        )
     }
 
     override fun onDestroyView() {

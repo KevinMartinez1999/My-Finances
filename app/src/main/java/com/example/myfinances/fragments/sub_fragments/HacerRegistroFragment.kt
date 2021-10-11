@@ -1,17 +1,19 @@
 package com.example.myfinances.fragments.sub_fragments
 
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.Window
+import android.widget.AdapterView
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.myfinances.R
 import com.example.myfinances.data.server.RegistroServer
-import com.example.myfinances.databinding.FragmentDialogRegistroBinding
+import com.example.myfinances.databinding.FragmentHacerRegistroBinding
 import com.example.myfinances.utils.EMPTY
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -19,25 +21,18 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DialogRegistroFragment : DialogFragment() {
+class HacerRegistroFragment : Fragment() {
 
-    private var _binding: FragmentDialogRegistroBinding? = null
+    private var _binding: FragmentHacerRegistroBinding? = null
     private val binding get() = _binding!!
     private var cal = Calendar.getInstance()
-    private var fecha: String = ""
-    private var flag: Boolean = true
+    private var fecha: String = EMPTY
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout to use as dialog or embedded fragment
-        _binding = FragmentDialogRegistroBinding.inflate(inflater, container, false)
-
-        binding.ingresospinner.visibility = View.VISIBLE
-        binding.buttoningreso.isEnabled = false
-        binding.valuetext.text = getString(R.string.valueIngresos)
+        _binding = FragmentHacerRegistroBinding.inflate(inflater, container, false)
 
         val currentDate: String = SimpleDateFormat(
             "dd-MM-yyyy",
@@ -55,11 +50,29 @@ class DialogRegistroFragment : DialogFragment() {
             binding.inputdate.setText(fecha)
         }
 
-        with(binding) {
-
-            buttonCancel.setOnClickListener {
-                onDestroyView()
+        binding.tipoRegistro.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                with(binding) {
+                    if (position == 0) {
+                        tipoDescripcionIngreso.visibility = VISIBLE
+                        tipoDescripcionGasto.visibility = GONE
+                    } else {
+                        tipoDescripcionIngreso.visibility = GONE
+                        tipoDescripcionGasto.visibility = VISIBLE
+                    }
+                }
+            }
+        }
+
+        with(binding) {
 
             inputdate.setOnClickListener {
                 DatePickerDialog(
@@ -71,26 +84,18 @@ class DialogRegistroFragment : DialogFragment() {
                 ).show()
             }
 
-            buttongasto.setOnClickListener {
-                flag = false
-                makeVisibleGasto()
-            }
-
-            buttoningreso.setOnClickListener {
-                flag = true
-                makeVisibleIngreso()
-            }
-
-            registerbutton.setOnClickListener {
+            registrar.setOnClickListener {
                 if (inputdate.text.isNotEmpty() and inputvalue.text.isNotEmpty()) {
-                    registrarEnServer(flag)
+                    if (tipoRegistro.selectedItemPosition == 0) {
+                        registrarEnServer(true)
+                    } else {
+                        registrarEnServer(false)
+                    }
                 } else {
-                    Toast.makeText(requireContext(), "Registro Inválido", Toast.LENGTH_LONG).show()
+                    toastMessage(getString(R.string.registro_invalido))
                 }
-
             }
         }
-
         return binding.root
     }
 
@@ -106,13 +111,13 @@ class DialogRegistroFragment : DialogFragment() {
             id = document.id
 
             val category: String = if (type) {
-                ingresospinner.selectedItem.toString()
+                tipoDescripcionIngreso.selectedItem.toString()
             } else {
-                gastospiner.selectedItem.toString()
+                tipoDescripcionGasto.selectedItem.toString()
             }
 
             val fecha = inputdate.text.toString()
-            val cuenta = metodoPagoSpinner.selectedItem.toString()
+            val cuenta = tipoPago.selectedItem.toString()
             val monto = inputvalue.text.toString().toLong()
 
             val registro = RegistroServer(
@@ -130,46 +135,23 @@ class DialogRegistroFragment : DialogFragment() {
                 .document(id)
                 .set(registro)
             clearViews()
-            Toast.makeText(requireContext(), "Registro Exitoso", Toast.LENGTH_LONG).show()
+            toastMessage(getString(R.string.registro_exitoso))
+            findNavController().navigate(R.id.action_HacerRegistroFragment_to_navigation_registro)
         }
     }
 
     private fun clearViews() {
         with(binding) {
-            inputdate.setText(EMPTY)
             inputvalue.setText(EMPTY)
         }
     }
 
-    private fun makeVisibleIngreso() {
-        with(binding) {
-            gastospiner.visibility = View.GONE
-            ingresospinner.visibility = View.VISIBLE
-            categoryaccount.text = getString(R.string.account2)
-            categorydescription.text = getString(R.string.descripcion)
-            buttoningreso.isEnabled = false
-            buttongasto.isEnabled = true
-            valuetext.text = getString(R.string.valueIngresos)
-        }
-    }
-
-    private fun makeVisibleGasto() {
-        with(binding) {
-            gastospiner.visibility = View.VISIBLE
-            ingresospinner.visibility = View.GONE
-            categoryaccount.text = getString(R.string.account)
-            categorydescription.text = getString(R.string.category)
-            buttoningreso.isEnabled = true
-            buttongasto.isEnabled = false
-            valuetext.text = getString(R.string.valueGastos)
-        }
-    }
-
-    /** The system calls this only when creating the layout in a dialog. */
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        return dialog
+    private fun toastMessage(message: String) {
+        Toast.makeText(
+            requireContext(),
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroyView() {

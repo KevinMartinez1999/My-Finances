@@ -15,6 +15,7 @@ import com.example.myfinances.utils.passValidator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -79,8 +80,14 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                //val user = auth.currentUser
-                                goToMainActivity()
+                                val user = auth.currentUser
+                                if (user != null) {
+                                    if (user.isEmailVerified) {
+                                        goToMainActivity()
+                                    } else {
+                                        toastMessage(getString(R.string.correo_no_verificado))
+                                    }
+                                }
                             } else {
                                 when (task.exception?.localizedMessage) {
                                     "The email address is badly formatted." -> {
@@ -105,6 +112,10 @@ class LoginActivity : AppCompatActivity() {
                 goToRegisterActivity()
             }
         }
+
+        forgot_password.setOnClickListener {
+            goToRecoveryActivity()
+        }
     }
 
     private fun clearViews() {
@@ -125,11 +136,16 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun goToRecoveryActivity() {
+        val intent = Intent(this, RecoveryActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun toastMessage(message: String) {
         Toast.makeText(
             this,
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         ).show()
     }
 }

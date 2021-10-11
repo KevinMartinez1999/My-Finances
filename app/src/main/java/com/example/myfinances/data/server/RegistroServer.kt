@@ -1,5 +1,7 @@
 package com.example.myfinances.data.server
 
+import java.io.Serializable
+
 class RegistroServer (
     val id: String? =  null,
     val date: String? = null,
@@ -7,4 +9,4 @@ class RegistroServer (
     val description: String? = null,
     val amount: Long? = null,
     val type: Boolean? = null
-)
+): Serializable

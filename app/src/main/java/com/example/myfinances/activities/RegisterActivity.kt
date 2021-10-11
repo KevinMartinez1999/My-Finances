@@ -40,8 +40,8 @@ class RegisterActivity : AppCompatActivity() {
                 val name = textUsername.text.toString()
                 val email = textEmail.text.toString()
                 val password = textPassword.text.toString()
-                var sexo = ""
-                var defaultPicture = ""
+                var sexo = EMPTY
+                var defaultPicture = EMPTY
                 when {
                     radioButtonHombre.isChecked -> {
                         sexo = getString(R.string.hombre)
@@ -113,7 +113,6 @@ class RegisterActivity : AppCompatActivity() {
             picture = defaultPicture
         )
         db.collection("users").document(id).set(userServer)
-        gotoLoginActivity()
     }
 
     private fun crearUsuario(
@@ -131,7 +130,9 @@ class RegisterActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     uid = user?.uid.toString()
                     crearUserServer(uid, name, email, sexo, defaultPicture)
-                    toastMessage("Usuario creado")
+                    user?.sendEmailVerification()
+                    toastMessage(getString(R.string.usuario_creado_verificar))
+                    gotoLoginActivity()
                 } else {
                     if (task.exception?.localizedMessage == "The email address is badly formatted.") {
                         toastMessage(getString(R.string.email_incorrecto))
@@ -162,7 +163,7 @@ class RegisterActivity : AppCompatActivity() {
         Toast.makeText(
             this,
             message,
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_LONG
         ).show()
     }
 }
