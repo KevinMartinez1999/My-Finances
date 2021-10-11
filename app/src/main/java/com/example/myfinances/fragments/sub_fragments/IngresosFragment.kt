@@ -34,7 +34,6 @@ class IngresosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIngresosBinding.inflate(inflater, container, false)
-
         estadisticasAdapter = EstadisticasAdapter(onItemClicked = { onRegistroItemClicked() })
         binding.RecyclerView.apply {
             layoutManager = LinearLayoutManager(this@IngresosFragment.context)
@@ -88,8 +87,15 @@ class IngresosFragment : Fragment() {
 
     private fun drawPiechart(items: MutableList<EstadisticasItem>) {
         val pieData: MutableList<SliceValue> = arrayListOf()
-        for ((i, item) in items.withIndex()) {
-            pieData.add(SliceValue(item.amount!!.toFloat(), colors[i]).setLabel(item.tipo))
+        var color = colors.random()
+        val coloresUsados: MutableList<Int> = arrayListOf()
+        coloresUsados.add(color)
+        for (item in items) {
+            pieData.add(SliceValue(item.amount!!.toFloat(), color).setLabel(item.tipo))
+            do {
+                color = colors.random()
+            } while (coloresUsados.contains(color))
+            coloresUsados.add(color)
         }
         val pieChartData = PieChartData(pieData)
         pieChartData.setHasLabels(true)
