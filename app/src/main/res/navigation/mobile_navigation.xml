@@ -7,62 +7,46 @@
 
     <fragment
         android:id="@+id/navigation_registro"
-        android:label="@string/transacciones"
         android:name="com.example.myfinances.fragments.RegistroFragment"
-        tools:layout="@layout/fragment_registro" >
+        android:label="@string/transacciones"
+        tools:layout="@layout/fragment_registro">
         <action
             android:id="@+id/action_navigation_registro_to_HacerRegistroFragment"
-            app:destination="@id/HacerRegistroFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/HacerRegistroFragment" />
         <action
             android:id="@+id/action_navigation_registro_to_EditarRegistroFragment"
-            app:destination="@id/EditarRegistroFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/EditarRegistroFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_estadisticas"
-        android:label="@string/estadisticas"
         android:name="com.example.myfinances.fragments.EstadisticasFragment"
+        android:label="@string/estadisticas"
         tools:layout="@layout/fragment_estadisticas" />
     <fragment
         android:id="@+id/navigation_bienes"
-        android:label="@string/bienes"
         android:name="com.example.myfinances.fragments.BienesFragment"
+        android:label="@string/bienes"
         tools:layout="@layout/fragment_bienes" />
     <fragment
         android:id="@+id/navigation_ajustes"
-        android:label="@string/ajustes"
         android:name="com.example.myfinances.fragments.AjustesFragment"
+        android:label="@string/ajustes"
         tools:layout="@layout/fragment_ajustes" />
     <fragment
         android:id="@+id/HacerRegistroFragment"
         android:name="com.example.myfinances.fragments.sub_fragments.HacerRegistroFragment"
-        tools:layout="@layout/fragment_hacer_registro" >
+        tools:layout="@layout/fragment_hacer_registro">
         <action
             android:id="@+id/action_HacerRegistroFragment_to_navigation_registro"
-            app:destination="@id/navigation_registro"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/navigation_registro" />
     </fragment>
     <fragment
         android:id="@+id/EditarRegistroFragment"
         android:name="com.example.myfinances.fragments.sub_fragments.EditarRegistroFragment"
-        tools:layout="@layout/fragment_editar_registro" >
+        tools:layout="@layout/fragment_editar_registro">
         <action
             android:id="@+id/action_EditarRegistroFragment_to_navigation_registro"
-            app:destination="@id/navigation_registro"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/navigation_registro" />
         <argument
             android:name="register"
             app:argType="com.example.myfinances.data.server.RegistroServer"
